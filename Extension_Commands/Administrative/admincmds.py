@@ -13,7 +13,6 @@ class AdminCMDS(commands.Cog):
     @commands.command(hidden=True)
     @commands.is_owner()
     async def createembed(self, ctx):
-        await ctx.delete()
 
         embed=discord.Embed(title="Official RP Roblox Server", description=emoji.emojize("Roleplay with others as a pilot or crew in our official RP server. \n\n Make sure your [Privacy Settings](https://www.roblox.com/my/account#!/privacy) are set to 'Everyone' can invite you!"), color=0x00FF00)
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/707431044902682644/931755527334137886/Logo4_AS_copy.png")
