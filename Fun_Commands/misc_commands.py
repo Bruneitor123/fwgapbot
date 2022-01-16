@@ -1,7 +1,6 @@
 #pylint: disable=unused-variable
 
 import discord
-import asyncio
 import random
 import aiohttp
 from discord.ext import commands
@@ -13,7 +12,7 @@ class Miscellaneous(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @slash_command()
+    @slash_command(guild_ids=[856678143608094751])
     async def add(self, ctx, left: int, right: int):
         """Adds two numbers together like a sum."""
         if left >= 10000:
@@ -24,7 +23,7 @@ class Miscellaneous(commands.Cog):
             return
         await ctx.respond(left + right)
 
-    @slash_command()
+    @slash_command(guild_ids=[856678143608094751])
     async def roll(self, ctx, dice: str):
         """Rolls a dice in NdN format."""
         try:
@@ -45,7 +44,7 @@ class Miscellaneous(commands.Cog):
         result = [str(result) for result in result]
         await ctx.respond(", ".join(result) + "\n Or the total sum: **{0}**".format(str(total)))
 
-    @slash_command()
+    @slash_command(guild_ids=[856678143608094751])
     async def choose(self, ctx, choices: str):
         """Chooses between multiple choices."""
         theauthor = ctx.author
@@ -72,12 +71,12 @@ class Miscellaneous(commands.Cog):
     #     else:
     #         return await ctx.send('Hey, you must be a Server Booster in order to use this command!', delete_after=10.0)
 
-    @slash_command()
+    @slash_command(guild_ids=[856678143608094751])
     async def joined(self, ctx, member: discord.Member):
         """Says when a member joined."""
         await ctx.respond('{0.name} joined in {0.joined_at}'.format(member))
 
-    @slash_command()
+    @slash_command(guild_ids=[856678143608094751])
     async def cat(self, ctx):
         """Get a random cat image from The Cat API."""
         search_url = 'https://api.thecatapi.com/v1/images/search'
@@ -92,7 +91,7 @@ class Miscellaneous(commands.Cog):
 
         await ctx.respond(f'{cat_img_url}')
 
-    @slash_command()
+    @slash_command(guild_ids=[856678143608094751])
     async def dog(self, ctx):
         """Get a random dog image from The Dog API."""
         search_url = 'https://api.thedogapi.com/v1/images/search'
@@ -107,7 +106,7 @@ class Miscellaneous(commands.Cog):
 
         await ctx.respond(f'{dog_img_url}')
 
-    @slash_command()
+    @slash_command(guild_ids=[856678143608094751])
     async def magic8ball(self, ctx):
         """Decide your fate via this Magic 8 Ball..."""
         return await ctx.respond(random.choice([
@@ -150,7 +149,7 @@ class Miscellaneous(commands.Cog):
             return
 
 
-    @slash_command()
+    @slash_command(guild_ids=[856678143608094751])
     async def ping(self, ctx):
         """Pong!"""
         finallatency = self.bot.latency*10**3

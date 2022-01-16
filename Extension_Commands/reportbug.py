@@ -76,7 +76,7 @@ class Report(commands.Cog):
     #             commands.Bot.add_view(ReplySystem(bot, user, channel, embed, embedmsg))
     #         self.persistent_views_added = True
 
-    @slash_command()
+    @slash_command(guild_ids=[856678143608094751])
     async def reportbug(self, ctx):
         """Creates an interactive embed where you can report bugs from Airport Simulator."""
         autor = ctx.author

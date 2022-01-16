@@ -34,7 +34,7 @@ class SuggestPlanes(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         
-    @slash_command()
+    @slash_command(guild_ids=[856678143608094751])
     async def planesuggest(
         self, 
         ctx,
@@ -111,6 +111,8 @@ class SuggestPlanes(commands.Cog):
                         await ctx.respond('Process Cancelled, use ``/planesuggest`` to start the command over.', ephemeral=True)
                         return
                     await bug_text.delete()
+                    if len(bug_text.content) >= 30:
+                        return await ctx.respond('You can''t suggest a plane with more than 30 characters.', ephemeral=True)
 
                     tempplaneslist, msglinklist = dbchecklistap(bug_text=bug_text.content)
 

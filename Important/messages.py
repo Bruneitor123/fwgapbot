@@ -22,12 +22,15 @@ class MyMessages(commands.Cog):
     #Tells whoever invites this bot to their server to just... It won't work :P
     @commands.Cog.listener("on_guild_join")
     async def disable_bot_on_join(self, guild):
-        general = find(lambda x:x.name == 'general', guild.text_channels)
-        if general and general.permissions_for(guild.me).send_messages:
-            await general.send("""Hello {}! Thanks for inviting me to this amazing server, 
-            although **every** function has been disabled.\n\n Why? Our bot is only for private usage, 
-            if you use it anywhere else rather than the Official [Airplane Simulator](https://discord.gg/xD3x4pVDV6) Discord Server, it won't work.\n
-            You are able to invite this bot for the sole purpose of making it a verified bot! Your help is appreciated.""")
+        try:
+            general = find(lambda x:x.name == 'general', guild.text_channels)
+            if general and general.permissions_for(guild.me).send_messages:
+                await general.send("""Hello {}! Thanks for inviting me to this amazing server, 
+                although **every** function has been disabled.\n\n Why? Our bot is only for private usage, 
+                if you use it anywhere else rather than the Official [Airplane Simulator](https://discord.gg/xD3x4pVDV6) Discord Server, it won't work.\n
+                You are able to invite this bot for the sole purpose of making it a verified bot! Your help is appreciated.""")
+        except Exception:
+            pass
 
 
 
@@ -40,8 +43,8 @@ class MyMessages(commands.Cog):
             message.guild is None
             or message.author.bot
             or message.guild.id != 856678143608094751
-            #REMOVE THIS WHEN FINISH EDITING
-            or message.author.id not in [348174141121101824,290078194298519552]
+            #Below if uncommented will only make commands available for use to Florian and Me.
+            #or message.author.id not in [348174141121101824,290078194298519552]
         ):
             return
 
@@ -73,8 +76,8 @@ class MyMessages(commands.Cog):
             message.guild is None
             or message.author.bot
             or message.guild.id != 856678143608094751
-            #REMOVE THIS WHEN FINISH EDITING
-            or message.author.id not in [348174141121101824,290078194298519552]
+            #Below if uncommented will only make commands available for use to Florian and Me.
+            #or message.author.id not in [348174141121101824,290078194298519552]
         ):
             return
 
@@ -102,8 +105,8 @@ class MyMessages(commands.Cog):
             message.guild is None
             or message.author.bot
             or message.guild.id != 856678143608094751
-            #REMOVE THIS WHEN FINISH EDITING
-            or message.author.id not in [348174141121101824,290078194298519552]
+            #Below if uncommented will only make commands available for use to Florian and Me.
+            #or message.author.id not in [348174141121101824,290078194298519552]
         ):
             return
 

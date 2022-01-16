@@ -16,7 +16,7 @@ class Suggest(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @slash_command()
+    @slash_command(guild_ids=[856678143608094751])
     async def suggest(
         self, 
         ctx, 
@@ -59,7 +59,8 @@ class Suggest(commands.Cog):
             elif "http://" in imagelink:
                 await ctx.respond('Unsupported file type! Remember to use an ``Image file`` format when attaching such as: ```.png - .jpg - .jpeg - .gif```', ephemeral=True)
                 return
-            embed.add_field(name="Suggested:", value=(f"{imagelink} {suggestion}"), inline=True)
+            else:
+                return await ctx.respond('Your url for an image is not a recognizable link! \nRemember to use an ``Image file`` format when attaching such as: ```.png - .jpg - .jpeg - .gif```')
         await ctx.respond("Your suggestion looks nice!\nAre you sure to post this suggestion?")
         surek = await ctx.interaction.original_message()
         await surek.add_reaction(emoji1)

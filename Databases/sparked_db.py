@@ -3,7 +3,6 @@
 #pylint: disable=W1401
 #pylint: disable=F0401
 
-from sqlite3 import connect
 import discord
 #import emoji #Used for the "-contest" command
 import fwgconfig
@@ -83,13 +82,6 @@ def insertonemaxthree(first, second, third, fourth, fifth, sixth, seventh):
 def mysql_table():
     db, c = connectplz()
     #Execute table for screenshot lists
-    c.execute("""CREATE TABLE IF NOT EXISTS `sslist` (
-                `rowid` INTEGER PRIMARY KEY AUTO_INCREMENT,
-                `discord_id` BIGINT(16),
-                `discord_name` VARCHAR(64),
-                `screenshots` INT(4)
-                ) DEFAULT CHARSET=utf8;""")
-
     c.execute("""CREATE TABLE IF NOT EXISTS `giveawaysrv` (
                 `rowid` INTEGER PRIMARY KEY AUTO_INCREMENT,
                 `giveaway_id` BIGINT(64),
@@ -116,15 +108,6 @@ def mysql_table():
                 `support_available` BOOLEAN,
                 `power_level` INT(4)
                 ) DEFAULT CHARSET=utf8;""")
-
-    c.execute("""CREATE TABLE IF NOT EXISTS `dmsupport` (
-                `rowid` INTEGER PRIMARY KEY AUTO_INCREMENT,
-                `supportuser_id` BIGINT(16),
-                `supportuser_name` VARCHAR(64),
-                `isuserticketing` BOOLEAN,
-                `channelusinguser` BIGINT(16),
-                `staffuser_id` BIGINT(16)
-                ) DEFAULT CHARSET=utf8;""")
     
     c.execute("""CREATE TABLE IF NOT EXISTS `boosters` (
                 `rowid` INTEGER PRIMARY KEY AUTO_INCREMENT,
@@ -139,8 +122,8 @@ def mysql_table():
                 `rowid` INTEGER PRIMARY KEY AUTO_INCREMENT,
                 `suggester_id` BIGINT(16),
                 `suggester_name` VARCHAR(64),
-                `airplane_name` VARCHAR(32),
-                `message_link` VARCHAR(128)
+                `airplane_name` VARCHAR(64),
+                `message_link` VARCHAR(256)
                 ) DEFAULT CHARSET=utf8;""")
 
 #SparkedDB means the connection specifically to ONLY SparkedHosting Databases. (Where my bot is located and hosted)
@@ -150,7 +133,7 @@ class SparkedDB(commands.Cog):
         self.bot = bot
         mysql_table()
 
-    @slash_command()
+    @slash_command(guild_ids=[856678143608094751])
     async def operatorlist(self, ctx):
         """A Command that gathers every staff member stored in a database, returns an embed with a list."""
         db, c = connectplz()
