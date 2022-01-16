@@ -218,19 +218,5 @@ async def on_member_update(before, after):
 
         #await channel3.send("{0.mention} Stopped boosting the server. Perks were removed and color roles were too. The user has not been removed to the database to keep information.".format(after))
 
-
-    #Other Roles being checked
-    if len(before.roles) < len(after.roles):
-        new_role = next(role for role in after.roles if role not in before.roles)
-        if new_role.name == ('Fat Whales'):
-            await channel.send("{0.mention} You have been promoted to a Fat Whale! :confetti_ball:\n You've been granted the role '{1}' and you got hoisted above ton of users!".format(after, new_role.name))
-
-        #elif new_role.name in ('Moderator'):
-            #await channel2.send("{0.mention} you are now part of the Fat Whale Games staff as a moderator, we're so excited to have you here! :confetti_ball:".format(after))
-        
-        elif new_role.name in ('Support'):
-            #await channel2.send("{0.mention} Thanks for becoming part of the Alpha Support team from Fat Whale Games!".format(after))
-            await after.send('Welcome to the Support Team of Fat Whale Games!')
-
 #FINAL STATEMENTS
 bot.run(mythicaltoken, reconnect=True) #Run the maximum token in a secret txt file
