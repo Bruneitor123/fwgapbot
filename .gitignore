@@ -1,0 +1,17 @@
+__pycache__
+.vscode
+test.py
+desktop.ini
+startbot.cmd
+startlavalink.cmd
+README.md
+controlfwgbot.py
+controlfwgbot.spec
+build
+dist
+
+#MUST BE ON SERVER FILES
+.env
+token.txt
+token(fwgbot).txt
+application.yml

@@ -1,0 +1,11 @@
+wheel
+pymysql
+emoji
+requests
+pillow
+datetime
+wavelink
+ffmpeg
+python-dotenv
+pynacl
+aiohttp
