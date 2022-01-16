@@ -59,8 +59,7 @@ class Suggest(commands.Cog):
             elif "http://" in imagelink:
                 await ctx.respond('Unsupported file type! Remember to use an ``Image file`` format when attaching such as: ```.png - .jpg - .jpeg - .gif```', ephemeral=True)
                 return
-            else:
-                return await ctx.respond('Your url for an image is not a recognizable link! \nRemember to use an ``Image file`` format when attaching such as: ```.png - .jpg - .jpeg - .gif```')
+            embed.add_field(name="Suggested:", value=(f"{imagelink} {suggestion}"), inline=True)
         await ctx.respond("Your suggestion looks nice!\nAre you sure to post this suggestion?")
         surek = await ctx.interaction.original_message()
         await surek.add_reaction(emoji1)
