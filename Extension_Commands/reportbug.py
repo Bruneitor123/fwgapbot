@@ -35,6 +35,7 @@ class ReplySystem(discord.ui.View):
             button.label = "Already marked as fixed."
             button.disabled = True
             await self.embedmsg.edit(embed=self.embed, view=self)
+            await self.context.author.send('**Your bug report has been updated!**\n\nYour bug was marked as fixed in ***New Servers***!')
         elif interaction.user.id not in stafflist:
             return await interaction.response.send_message("You are not a staff member!", ephemeral=True)
         
@@ -53,13 +54,13 @@ class ReplySystem(discord.ui.View):
             button2.label = "Cannot Mark as Fixed."
             button2.disabled = True
             await bug_text.delete()
-            self.embed.set_footer(text=f"User {interaction.user.name} answered:\n{bug_text.content}", icon_url=interaction.user.avatar.url)
+            self.embed.set_footer(text=f"{interaction.user.name} answered:\n{bug_text.content}", icon_url=interaction.user.avatar.url)
             button.label = "Already Responded."
             button.disabled = True
             await self.embedmsg.edit(embed=self.embed, view=self)
 
             await interaction.followup.send(content='Bug Report responded successfully!', ephemeral=True)
-            await self.context.author.send('This DM was sent successfully')
+            await self.context.author.send(f'**Your bug report has been updated!**\n\n{interaction.user.name} answered:\n{bug_text.content}')
         elif interaction.user.id not in stafflist:
             return await interaction.response.send_message("You are not a staff member!", ephemeral=True)
 
