@@ -39,12 +39,15 @@ class SuggestPlanes(commands.Cog):
         self, 
         ctx,
         planename: Option(str, "The Name of the Plane you are suggesting", required=False), 
-        imagelink: Option(str, "The image link in raw format to input a screenshot (https/http..)", required=False)
+        imagelink: Option(str, "The image link in raw format to input a screenshot (https/http..)", required=False, default="")
         ):
-        """Suggest your favorite plane! If no arguments are given, It will start an interactive embed sequence."""
+        """Suggest your favorite plane! If no arguments are given, It will start an interactive embed sequence. (Recommended)"""
 
         autor = ctx.author
         bugreportchannel = self.bot.get_channel(920187435269357578)
+
+        if imagelink is None and planename is not None:
+            return await ctx.respond(emoji.emojize(':x: You MUST insert an image to suggest a plane.'))
 
         if planename is not None and imagelink is not None:
             await ctx.respond(emoji.emojize(':thinking: Loading QuickSuggest, please wait a few seconds...'), ephemeral=True)
@@ -60,8 +63,11 @@ class SuggestPlanes(commands.Cog):
             finalembedgeneral.set_author(name=autor, icon_url=autor.avatar.url)
             finalembedgeneral.set_thumbnail(url="https://cdn.discordapp.com/attachments/707431044902682644/931755527334137886/Logo4_AS_copy.png")
             try:
+                if "https://" not in imagelink or "http://" not in imagelink:
+                    await ctx.respond('The Imagelink you provided is NOT valid! Try something like: \nhttps://cdn.discordapp.com/attachments/707431044902682644/931755527334137886/Logo4_AS_copy.png')
+                    return
                 finalembedgeneral.set_image(url=imagelink)
-            except Exception:
+            except:
                 return await ctx.respond('The Imagelink you provided is NOT valid! Try something like: \nhttps://cdn.discordapp.com/attachments/707431044902682644/931755527334137886/Logo4_AS_copy.png')
             theepic = await bugreportchannel.send(embed=finalembedgeneral)
             await theepic.add_reaction(yesemoji)
@@ -208,9 +214,6 @@ class SuggestPlanes(commands.Cog):
                 elif str(reaction.emoji) == noemoji:
                     await page1.delete()
                     return await ctx.respond('Process Cancelled, use ``/planesuggest`` to start the command over.', ephemeral=True)
-
-        elif imagelink is None:
-            return await ctx.respond(emoji.emojize(':x: You MUST insert an image to suggest a plane.'))
 
 def setup(bot):
     bot.add_cog(SuggestPlanes(bot))
