@@ -16,11 +16,12 @@ noemoji = '<:no:862568274901991455>'
 
 
 class ReplySystem(discord.ui.View):
-    def __init__(self, bot, channel, embed, embedmsg):
+    def __init__(self, ctx, bot, channel, embed, embedmsg):
         self.embedmsg = embedmsg
         self.embed = embed
         self.channel = channel
         self.bot = bot
+        self.context = ctx
         super().__init__(timeout=None)
 
     @discord.ui.button(label="Mark as Fixed (Admin Only)", style=discord.ButtonStyle.green, custom_id="fwgbot:markfixed", emoji="<:yes:862568274822168577>")
@@ -58,6 +59,7 @@ class ReplySystem(discord.ui.View):
             await self.embedmsg.edit(embed=self.embed, view=self)
 
             await interaction.followup.send(content='Bug Report responded successfully!', ephemeral=True)
+            await self.context.author.send('This DM was sent successfully')
         elif interaction.user.id not in stafflist:
             return await interaction.response.send_message("You are not a staff member!", ephemeral=True)
 
@@ -205,7 +207,7 @@ class Report(commands.Cog):
                                     pass
                                 await page1.delete()
                                 finalembedlike = await bugreportchannel.send(embed=finalembedgeneral)
-                                view = ReplySystem(self.bot, bugreportchannel.id, embed=finalembedgeneral, embedmsg=finalembedlike)
+                                view = ReplySystem(self.bot, ctx, bugreportchannel.id, embed=finalembedgeneral, embedmsg=finalembedlike)
                                 await finalembedlike.edit(embed=finalembedgeneral, view=view)
                                 return await ctx.respond(f'Your bug was reported successfully!\n [Click Here to check it out!]({finalembedlike.jump_url})', ephemeral=True)
                             elif str(reaction.emoji) == noemoji:
@@ -316,7 +318,7 @@ class Report(commands.Cog):
                                     pass
                                 await page1.delete()
                                 finalembedlike = await bugreportchannel.send(embed=finalembedgeneral)
-                                view = ReplySystem(self.bot, bugreportchannel.id, embed=finalembedgeneral, embedmsg=finalembedlike)
+                                view = ReplySystem(self.bot, ctx, bugreportchannel.id, embed=finalembedgeneral, embedmsg=finalembedlike)
                                 await finalembedlike.edit(embed=finalembedgeneral, view=view)
                                 return await ctx.respond(f'Your bug was reported successfully!\n [Click Here to check it out!]({finalembedlike.jump_url})', ephemeral=True)
                             elif str(reaction.emoji) == noemoji:
@@ -427,7 +429,7 @@ class Report(commands.Cog):
                                     pass
                                 await page1.delete()
                                 finalembedlike = await bugreportchannel.send(embed=finalembedgeneral)
-                                view = ReplySystem(self.bot, bugreportchannel.id, embed=finalembedgeneral, embedmsg=finalembedlike)
+                                view = ReplySystem(self.bot, ctx, bugreportchannel.id, embed=finalembedgeneral, embedmsg=finalembedlike)
                                 await finalembedlike.edit(embed=finalembedgeneral, view=view)
                                 return await ctx.respond(f'Your bug was reported successfully!\n [Click Here to check it out!]({finalembedlike.jump_url})', ephemeral=True)
                             elif str(reaction.emoji) == noemoji:
@@ -538,7 +540,7 @@ class Report(commands.Cog):
                                     pass
                                 await page1.delete()
                                 finalembedlike = await bugreportchannel.send(embed=finalembedgeneral)
-                                view = ReplySystem(self.bot, bugreportchannel.id, embed=finalembedgeneral, embedmsg=finalembedlike)
+                                view = ReplySystem(self.bot, ctx, bugreportchannel.id, embed=finalembedgeneral, embedmsg=finalembedlike)
                                 #Store to database for persistent view
                                 #sparked_db.inserttoreportbug(self.bot, autor, bugreportchannel, finalembedgeneral, finalembedlike)
                                 await finalembedlike.edit(embed=finalembedgeneral, view=view)
