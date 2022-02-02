@@ -27,7 +27,6 @@ bot.remove_command("help")
 #List of users with operative powers in the server. (Generally Moderators and above)
 
 
-verifyint = 0
 DB_IP = fwgconfig.DATABASE_IP
 DB_USER = fwgconfig.DATABASE_USER
 DB_PASS = fwgconfig.DATABASE_PASSWORD
@@ -58,7 +57,6 @@ extensions = [
               "Extension_Commands.suggest",
               "Extension_Commands.suggestplanes",
               "Extension_Commands.Administrative.admincmds",
-              ###"Extension_Commands.boosters",
               "Extension_Commands.help",
               #"Giveaway_Setup.startgiveaway",
               #Music Startup - DISABLED BECAUSE OK
@@ -107,7 +105,10 @@ async def on_ready():
     await bot.wait_until_ready()
     #verifypurge.start()
 
-
+    print('Logged in as:')
+    print(bot.user.name+bot.user.discriminator)
+    print(f'Watching {len(bot.users)} users in {len(bot.guilds)} guilds')
+    print(f'Latest known bot latency is: {bot.latency*1000:,.0f} ms')
     print(" /\------------------------------- Bot is ready and running! -------------------------------/\ ")
 
 @bot.event
