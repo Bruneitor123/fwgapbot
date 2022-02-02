@@ -41,7 +41,7 @@ class SuggestPlanes(commands.Cog):
         planename: Option(str, "The Name of the Plane you are suggesting", required=False), 
         imagelink: Option(str, "The image link in raw format to input a screenshot (https/http..)", required=False, default="")
         ):
-        """Suggest your favorite plane! If no arguments are given, It will start an interactive embed sequence. (Recommended)"""
+        """Suggest your favorite plane! If no arguments are given, It will start an interactive embed sequence."""
 
         autor = ctx.author
         bugreportchannel = self.bot.get_channel(920187435269357578)
