@@ -16,7 +16,7 @@ noemoji = '<:no:862568274901991455>'
 
 
 class ReplySystem(discord.ui.View):
-    def __init__(self, ctx, bot, channel, embed, embedmsg):
+    def __init__(self, bot, ctx, channel, embed, embedmsg):
         self.embedmsg = embedmsg
         self.embed = embed
         self.channel = channel
