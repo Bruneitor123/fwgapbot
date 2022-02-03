@@ -62,11 +62,12 @@ class SuggestPlanes(commands.Cog):
             finalembedgeneral=discord.Embed(title="FWG Plane Suggestions", description=f"**Plane Name:** {planename}")
             finalembedgeneral.set_author(name=autor, icon_url=autor.avatar.url)
             finalembedgeneral.set_thumbnail(url="https://cdn.discordapp.com/attachments/707431044902682644/931755527334137886/Logo4_AS_copy.png")
+            finalembedgeneral.set_image(url=imagelink)
             try:
-                finalembedgeneral.set_image(url=imagelink)
+                theepic = await bugreportchannel.send(embed=finalembedgeneral)
             except discord.HTTPException as e:
                 return await ctx.respond(f'There was an error trying to set your image! ``{e}``\nThe Imagelink you provided is NOT valid! Try something like: \nhttps://cdn.discordapp.com/attachments/707431044902682644/931755527334137886/Logo4_AS_copy.png')
-            theepic = await bugreportchannel.send(embed=finalembedgeneral)
+
             await theepic.add_reaction(yesemoji)
             await theepic.add_reaction(noemoji)
 
