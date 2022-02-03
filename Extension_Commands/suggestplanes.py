@@ -47,7 +47,7 @@ class SuggestPlanes(commands.Cog):
         bugreportchannel = self.bot.get_channel(920187435269357578)
 
         if imagelink is None and planename is not None:
-            return await ctx.respond(emoji.emojize(':x: You MUST insert an image to suggest a plane.'))
+            return await ctx.respond(emoji.emojize(':x: You MUST insert an image to suggest a plane.'), ephemeral=True)
 
         if planename is not None and imagelink is not None:
             await ctx.respond(emoji.emojize(':thinking: Loading QuickSuggest, please wait a few seconds...'), ephemeral=True)
@@ -66,7 +66,7 @@ class SuggestPlanes(commands.Cog):
             try:
                 theepic = await bugreportchannel.send(embed=finalembedgeneral)
             except discord.HTTPException as e:
-                return await ctx.respond(f'There was an error trying to set your image! ``{e}``\nThe Imagelink you provided is NOT valid! Try something like: \nhttps://cdn.discordapp.com/attachments/707431044902682644/931755527334137886/Logo4_AS_copy.png')
+                return await ctx.respond(f'Your command returned an error! ```{e}``` \n\nThe Imagelink you provided is NOT valid! Try something like: \nhttps://cdn.discordapp.com/attachments/707431044902682644/931755527334137886/Logo4_AS_copy.png', ephemeral=True)
 
             await theepic.add_reaction(yesemoji)
             await theepic.add_reaction(noemoji)
