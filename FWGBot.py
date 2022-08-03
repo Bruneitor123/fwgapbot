@@ -14,7 +14,6 @@ from discord.utils import find
 
 description = '''The Private Multi-task Fat Whales Games Bot\n Made by MrBrunoh. (Version 3.0 Stable - Now this bot works only on Airplane Simulator)'''
 bot = discord.Bot(description=description, intents=discord.Intents.all(), debug_guilds=[856678143608094751, 645052129710571581])
-
 #Read the token in a private.txt file.
 readtoken = open("token.txt","r")
 if readtoken.mode == "r":
@@ -74,6 +73,10 @@ async def loadcog(ctx, *, cog:str):
 async def on_ready():
     #Wait until the bot has loaded into discord
     await bot.wait_until_ready()
+    
+    #Set a cool presence, why not?
+
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"**{len(bot.users)}** in **{len(bot.guilds)}** guilds."))
 
     print(" /\-----------------------------------------------------------------------------------------/\ ")
     print('                                         Logged in as:')
