@@ -14,7 +14,7 @@ class minesweeper(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @slash_command(guild_ids=[856678143608094751])
+    @slash_command()
     async def minesweeper(self, ctx, columns = None, rows = None, bombs = None):
         """Are you willing to play the MineSweeper?!"""
         if columns is None or rows is None and bombs is None:

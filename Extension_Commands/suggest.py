@@ -5,6 +5,8 @@ import asyncio
 import emoji
 from discord.ext import commands
 from discord.commands import slash_command, Option
+from discord.utils import find
+import fwgconfig
 
 
 yesemoji = '<:yes:862568274822168577>'
@@ -16,26 +18,27 @@ class Suggest(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @slash_command(guild_ids=[856678143608094751])
+    @slash_command()
     async def suggest(
         self, 
         ctx, 
-        suggestion: Option(str, "The suggestion you are going to send"),
-        imagelink: Option(str, "The image link in raw format to input a screenshot (https/http..)", required=False, default="")
+        suggestion: Option(str,"Type here the suggestion. It must be an In-Game feature."),
+        imagelink: Option(str,"The image link in raw format to input a screenshot (https/http..)", required=False, default="")
     ):
         """Suggestion command to, well, suggest something and let developers know you really like that."""
+        urlowo = await fwgconfig.serverselect(ctx)
         userboi = ctx.author
         emoji1 = yesemoji
         emoji2 = noemoji
-        channel = self.bot.get_channel(862567768599822376)
+        channel = find(lambda x:x.name == '🙂suggestions', ctx.guild.text_channels)
         embed=discord.Embed(title=emoji.emojize("FWG Suggestions"), description=" ", color=0xFFFFFF)
         embed.set_author(name=userboi, icon_url=userboi.avatar.url)
-        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/707431044902682644/931755527334137886/Logo4_AS_copy.png")
+        embed.set_thumbnail(url=urlowo)
         if len(suggestion) <= 15:
-            await ctx.respond('You must have at least 15 characters to send a suggestion to avoid flooding. (We are sorry if your suggestion is really simple, but we need this)', ephemeral=True)
+            await ctx.respond('You must have at least 15 characters to send a suggestion to avoid flooding. (We are sorry if your suggestion is really simple, please specify it!)', ephemeral=True)
             return
         elif len(suggestion) > 500:
-            await ctx.respond("You can't use more than 500 characters in a suggestion.", ephemeral=True)
+            await ctx.respond("Sorry, you can't use more than 500 characters in a suggestion.", ephemeral=True)
             return
 
         if imagelink is None:
@@ -85,17 +88,20 @@ class Suggest(commands.Cog):
             elif str(reaction.emoji) == noemoji:
                 await surek.delete()
                 return
-
+ 
     def num_reactions(message):
         for reaction in message.reactions:
             if str(reaction.emoji) == yesemoji:
                 return reaction.count
 
-    @commands.has_role('Moderator')
-    @commands.command()
-    async def suggestcount(self, ctx, count:int, lastreactions:int):
+    @slash_command()
+    @discord.default_permissions(administrator=True,)
+    async def suggestcount(self, ctx, 
+    count: Option(int,"Number of minimum reactions to be counted."), 
+    lastreactions: Option(int, "Last x messages to select from the suggestions channel.")
+    ):
         """Returns amount of suggestions above specified"""
-        channel = self.bot.get_channel(862567768599822376)
+        channel = find(lambda x:x.name == '🙂suggestions', ctx.guild.text_channels)
         async for mymessages in channel.history(limit = lastreactions):
             allReactions = mymessages.reactions
             for reaction in allReactions:

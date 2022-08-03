@@ -1,5 +1,6 @@
 wheel
 pymysql
+pycord
 emoji
 requests
 pillow

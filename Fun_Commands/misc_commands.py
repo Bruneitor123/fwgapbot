@@ -4,15 +4,17 @@ import discord
 import random
 import aiohttp
 from discord.ext import commands
-from Databases import sparked_db
-from discord.commands import slash_command
+from discord.commands import slash_command, Option
+from discord.commands import SlashCommandGroup
 
 class Miscellaneous(commands.Cog):
     
-    def __init__(self, bot):
-        self.bot = bot
+    def __init__(self, bot_: discord.Bot):
+        self.bot = bot_
 
-    @slash_command(guild_ids=[856678143608094751])
+    fun = SlashCommandGroup("fun", "Commands dedicated, to... Have fun.")
+
+    @fun.command()
     async def add(self, ctx, left: int, right: int):
         """Adds two numbers together like a sum."""
         if left >= 10000:
@@ -23,7 +25,7 @@ class Miscellaneous(commands.Cog):
             return
         await ctx.respond(left + right)
 
-    @slash_command(guild_ids=[856678143608094751])
+    @fun.command()
     async def roll(self, ctx, dice: str):
         """Rolls a dice in NdN format."""
         try:
@@ -44,39 +46,12 @@ class Miscellaneous(commands.Cog):
         result = [str(result) for result in result]
         await ctx.respond(", ".join(result) + "\n Or the total sum: **{0}**".format(str(total)))
 
-    @slash_command(guild_ids=[856678143608094751])
-    async def choose(self, ctx, choices: str):
-        """Chooses between multiple choices."""
-        theauthor = ctx.author
-        role = discord.utils.find(lambda r: r.name == 'Server Booster', ctx.message.guild.roles)
-        if role in theauthor.roles:
-            if len(choices) < 5:
-                return await ctx.respond('A sentence must have at least 5 words.', ephemeral=True)
-            li = list(choices.split(" "))
-            await ctx.respond(random.choice(li))
-        else:
-            return await ctx.respond('Hey, you must be a Server Booster in order to use this command!', ephemeral=True)
-
-    # @commands.command()
-    # async def repeat(self, ctx, times: int, *, content='repeating...'):
-    #     """Repeats a message multiple times."""
-    #     theauthor = ctx.author
-    #     role = discord.utils.find(lambda r: r.name == 'Server Booster', ctx.message.guild.roles)
-    #     if role in theauthor.roles:
-    #         for i in range(times):
-    #             if times < 5:
-    #                 await ctx.send(content)
-    #             else:
-    #                 return await ctx.send('Are you trying to spam?, Sorry, You can''t.', delete_after=10.0)
-    #     else:
-    #         return await ctx.send('Hey, you must be a Server Booster in order to use this command!', delete_after=10.0)
-
-    @slash_command(guild_ids=[856678143608094751])
+    @fun.command()
     async def joined(self, ctx, member: discord.Member):
         """Says when a member joined."""
         await ctx.respond('{0.name} joined in {0.joined_at}'.format(member))
 
-    @slash_command(guild_ids=[856678143608094751])
+    @fun.command()
     async def cat(self, ctx):
         """Get a random cat image from The Cat API."""
         search_url = 'https://api.thecatapi.com/v1/images/search'
@@ -91,7 +66,7 @@ class Miscellaneous(commands.Cog):
 
         await ctx.respond(f'{cat_img_url}')
 
-    @slash_command(guild_ids=[856678143608094751])
+    @fun.command()
     async def dog(self, ctx):
         """Get a random dog image from The Dog API."""
         search_url = 'https://api.thedogapi.com/v1/images/search'
@@ -106,7 +81,7 @@ class Miscellaneous(commands.Cog):
 
         await ctx.respond(f'{dog_img_url}')
 
-    @slash_command(guild_ids=[856678143608094751])
+    @fun.command()
     async def magic8ball(self, ctx):
         """Decide your fate via this Magic 8 Ball..."""
         return await ctx.respond(random.choice([
@@ -114,60 +89,40 @@ class Miscellaneous(commands.Cog):
             "Derp", "In your dreams", "It will be done.", "Yup", "No.", "Yes.", "YES, YES YES.", "My reply is a yes.", "My Reply is a no.", "Cringe..."]))
 
     #Totally Random Thing
-    @commands.command(hidden=True)
-    async def say(self, ctx, *, sayso = None):
+    @slash_command()
+    @discord.default_permissions(administrator=True,)
+    async def say(self, ctx, 
+    sayso: Option(str, "What's the secret message, chief?"),
+    attachment: Option(discord.Attachment, description="Attach a file if you want, this is optional.", required=False)
+    ):
         """Let the bot say whatever you want."""
-        autor = ctx.author
-        message = ctx.message
-        await message.delete()
-        if sayso is not None:
-            if autor.id in sparked_db.operatorlistcheck():
-                async with ctx.typing():
-                    saysos = await ctx.send('{0}'.format(sayso))
-                    return
-            else:
-                return
+        if attachment:
+            file = await attachment.to_file()
+            sentowo = await ctx.send('{0}'.format(sayso), file=file)
         else:
-            await ctx.send('Please Define something to say.', delete_after=10.0)
-            return
+            sentowo = await ctx.send('{0}'.format(sayso))
+        await ctx.respond(f'This message was sent successfully!', ephemeral=True)
 
-    @commands.command(hidden=True)
-    async def secretsay(self, ctx, channelarg, *, sayso = None):
-        """Now you can make the bot talk but secretly! (Use this command in a secret channel to send a msg to a public channel)"""
-        autor = ctx.author
-        message = ctx.message
-        await message.delete()
-        if sayso is not None:
-            if autor.id in sparked_db.operatorlistcheck():
-                channel = await commands.TextChannelConverter().convert(ctx=ctx,argument=channelarg)
-                saysos = await channel.send('{0}'.format(sayso))
-                return
-            else:
-                return
+    @slash_command()
+    @discord.default_permissions(administrator=True,)
+    async def secretsay(self, ctx, 
+    channel: Option(discord.TextChannel, "Select a channel for input."), 
+    sayso: Option(str, "What's the message you want to send anonymously?"),
+    attachment: Option(discord.Attachment, description="Attach a file if you want, this is optional.", required=False)
+    ):
+        """Admin Only Command."""
+        if attachment:
+            file = await attachment.to_file()
+            sentowo = await channel.send('{0}'.format(sayso), file=file)
         else:
-            await ctx.send('Please Define something to say.', delete_after=10.0)
-            return
+            sentowo = await channel.send('{0}'.format(sayso))
+        await ctx.respond(f'The message was sent successfully! [Check it out!]({sentowo.jump_url})', ephemeral=True)
 
-
-    @slash_command(guild_ids=[856678143608094751])
+    @fun.command()
     async def ping(self, ctx):
         """Pong!"""
         finallatency = self.bot.latency*10**3
-        await ctx.send("Pong! ``{}ms``".format(round(finallatency, 1)))
-
-    @commands.command(hidden=True)
-    async def fixrolesasap(self, ctx):
-        role = discord.utils.get(ctx.guild.roles, id=856694628194189312)
-
-        allmembers = self.bot.get_all_members()
-        i = 0
-        await ctx.send("Processing...")
-        for svusers in allmembers:
-            if len(svusers.roles) == 1:
-                await svusers.add_roles(role)
-                i += 1
-                print(f'Done {i} users without roles.')
-        await ctx.send(f"Success! done {i} users without roles.")
+        await ctx.respond("Pong! ``{}ms``".format(round(finallatency, 1)))
 
 def setup(bot):
     bot.add_cog(Miscellaneous(bot))

@@ -1,5 +1,6 @@
 import asyncio
 from discord.ext import commands
+from discord.commands import slash_command
 
 playerlist = []
 gameident = []
@@ -15,13 +16,13 @@ class TTT(commands.Cog):
         self.bot = bot
         self.ttt_games = {}
         
-    @commands.command()
-    async def ttt(self, ctx, move=""):
+    @slash_command()
+    async def ttt(self, ctx):
         """ Tic Tac Toe """
         global okaytoplay
         if okaytoplay == False:
-            return await ctx.message.delete()
-        await self.ttt_new(ctx.message.author, ctx.message.channel)
+            return await ctx.respond('You can''t play, for some reason...', ephemeral=True)
+        await self.ttt_new(ctx.author, ctx.channel)
         okaytoplay = False
         playerlist.append(ctx.author.id)
 
