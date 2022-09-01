@@ -87,20 +87,20 @@ class MyMessages(commands.Cog):
                 #Whoever desires to ping me... Will face the truthless end.
 
             else:
-                if message.author.id in sparked_db.operatorlistcheck(): return
-                for i in sparked_db.operatorlistcheck():
-                    didyoupingme = self.bot.get_user(i)
-                    #print(didyoupingme) (Print the operator list in didyoupingme)
-                    if didyoupingme.mentioned_in(message):
-                        #Get Discord User Status
-                        mystatus = message.guild.get_member(i)
-                        #Execute actions depending on the status of the member
-                        if str(mystatus.status) == "offline":
-                            await message.channel.send(f'The staff member {didyoupingme.name} is currently offline! Please refrain from pinging them!',  delete_after=25.0)
-                        elif str(mystatus.status) == "idle":
-                            await message.channel.send(f'The staff member {didyoupingme.name} is currently idle! Please refrain from pinging them!',  delete_after=25.0)
-                        elif str(mystatus.status) == "dnd":
-                            await message.channel.send(f'The staff member {didyoupingme.name} is currently busy (Do not disturb). Please refrain from pinging them!', delete_after=25.0)
+                if message.author.id in sparked_db.operatorlistcheck():
+                    for i in sparked_db.operatorlistcheck():
+                        didyoupingme = self.bot.get_user(i)
+                        #print(didyoupingme) (Print the operator list in didyoupingme)
+                        if didyoupingme.mentioned_in(message):
+                            #Get Discord User Status
+                            mystatus = message.guild.get_member(i)
+                            #Execute actions depending on the status of the member
+                            if str(mystatus.status) == "offline":
+                                await message.channel.send(f'The staff member {didyoupingme.name} is currently offline! Please refrain from pinging them!',  delete_after=25.0)
+                            elif str(mystatus.status) == "idle":
+                                await message.channel.send(f'The staff member {didyoupingme.name} is currently idle! Please refrain from pinging them!',  delete_after=25.0)
+                            elif str(mystatus.status) == "dnd":
+                                await message.channel.send(f'The staff member {didyoupingme.name} is currently busy (Do not disturb). Please refrain from pinging them!', delete_after=25.0)
 
 def setup(bot):
     bot.add_cog(MyMessages(bot))

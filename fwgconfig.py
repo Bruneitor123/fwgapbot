@@ -18,21 +18,6 @@ DATABASE_PASSWORD = os.getenv("DATABASE_PASSWORD")
 DATABASE_DATABASE = os.getenv("DATABASE_DATABASE")
 DATABASE_PORT = os.getenv("DATABASE_PORT")
 
-    # @fun.command()
-    # async def dog(self, ctx):
-    #     """Get a random dog image from The Dog API."""
-    #     search_url = 'https://api.thedogapi.com/v1/images/search'
-    #     search_headers = None
-
-    #     async with aiohttp.ClientSession() as session:
-    #         async with session.get(search_url, headers=search_headers) as resp:
-    #             json_resp = await resp.json()
-        
-    #     dog_dict = json_resp[0]
-    #     dog_img_url = dog_dict['url']
-
-    #     await ctx.respond(f'{dog_img_url}')
-
 fwgguilds = json.loads(config.get("Settings","fwgguilds"))
 
 async def serverselect(ctx):

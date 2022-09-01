@@ -38,7 +38,7 @@ def selectfirst(first, second, third, fourth):
     db, c = connectplz()
 
     selectstring = "SELECT `%s` FROM `%s` WHERE `%s` = '%s'"
-    c.execute(selectstring, first, second, third, fourth)
+    c.execute(selectstring, (first, second, third, fourth))
     fetchfirst = c.fetchone()
     return fetchfirst
 

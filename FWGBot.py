@@ -12,7 +12,7 @@ from discord.utils import find
 #os.environ["PYTHONASYNCIODEBUG"] = "1"
 
 
-description = '''The Private Multi-task Fat Whales Games Bot\n Made by MrBrunoh. (Version 3.0 Stable - Now this bot works only on Airplane Simulator)'''
+description = '''The Private Multi-task Fat Whales Games Bot\n Made by MrBrunoh. w/ Fat Whale Games (Version 3.109 Stable - Now this bot in 3+ authorized servers)'''
 bot = discord.Bot(description=description, intents=discord.Intents.all(), debug_guilds=[856678143608094751, 645052129710571581])
 #Read the token in a private.txt file.
 readtoken = open("token.txt","r")
