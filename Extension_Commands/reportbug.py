@@ -490,7 +490,7 @@ class Report(commands.Cog):
             if option == "Airport Tycoon":
                 bugreportchannel = self.bot.get_channel(681730197275541504) # Airport Tycoon ID for Bug Report Channel
                 embed1.set_footer(text=f"Bug-Report Channel Detected: {bugreportchannel.name}")
-                select.callback = the_callback(interaction, bugreportchannel)
+                select.callback = await the_callback(interaction, bugreportchannel)
                 thaview = View()
                 thaview.author = ctx.author.id
                 thaview.interaction_check = interaction_check
