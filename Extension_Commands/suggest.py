@@ -30,7 +30,7 @@ class Suggest(commands.Cog):
         userboi = ctx.author
         emoji1 = yesemoji
         emoji2 = noemoji
-        channel = find(lambda x:x.name == '🙂suggestions', ctx.guild.text_channels)
+        channel = find(lambda x:x.name == '🙂・suggestions', ctx.guild.text_channels)
         embed=discord.Embed(title=emoji.emojize("FWG Suggestions"), description=" ", color=0xFFFFFF)
         embed.set_author(name=userboi, icon_url=userboi.avatar.url)
         embed.set_thumbnail(url=urlowo)
@@ -101,7 +101,7 @@ class Suggest(commands.Cog):
     lastreactions: Option(int, "Last x messages to select from the suggestions channel.")
     ):
         """Returns amount of suggestions above specified"""
-        channel = find(lambda x:x.name == '🙂suggestions', ctx.guild.text_channels)
+        channel = find(lambda x:x.name == '🙂・suggestions', ctx.guild.text_channels)
         async for mymessages in channel.history(limit = lastreactions):
             allReactions = mymessages.reactions
             for reaction in allReactions:

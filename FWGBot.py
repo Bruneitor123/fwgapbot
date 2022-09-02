@@ -87,7 +87,7 @@ async def on_ready():
 
 @bot.event
 async def on_member_update(before, after):
-    channel = find(lambda x:x.name == '💬lounge', after.guild.text_channels) #General-Chat Channel
+    channel = find(lambda x:x.name == '💬・lounge', after.guild.text_channels) #General-Chat Channel
     
     #User boosted the server!
     if before.premium_since is None and after.premium_since is not None:
