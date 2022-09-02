@@ -3,8 +3,8 @@
 #pylint: disable=W1401
 #pylint: disable=F0401
 
-from sqlite3 import connect
 import discord
+import cryptography
 #import emoji #Used for the "-contest" command
 import fwgconfig
 import time

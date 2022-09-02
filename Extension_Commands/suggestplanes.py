@@ -5,6 +5,7 @@ import aiohttp
 import asyncio
 import emoji
 import io
+import cryptography
 from PIL import Image
 from discord.ext import commands
 from discord.commands import slash_command

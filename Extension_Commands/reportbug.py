@@ -12,6 +12,7 @@ from discord.ui import Select, View
 from Databases import sparked_db
 from discord.utils import find
 import fwgconfig
+import cryptography
 stafflist = sparked_db.operatorlistcheck()
 yesemoji = '<:yes:862568274822168577>'
 noemoji = '<:no:862568274901991455>'
