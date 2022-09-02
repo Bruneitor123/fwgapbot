@@ -460,6 +460,7 @@ class Report(commands.Cog):
         discord.SelectOption(label="Game-Breaking Bug", description="Bugs that break your game (I lost all my data, etc.)", emoji="🤖"),
         discord.SelectOption(label="Other Bugs", description="Other bugs that aren't listed here, e.g. strange errors.", emoji="🔎"),
         discord.SelectOption(label="Cancel/Exit", description="", emoji=f"{noemoji}")])
+        
         autor = ctx.author
         embed1=discord.Embed(title="FWG Bug Report System", description="**Choose a Bug Category to proceed: **", color=0xFFFFFF)
         embed1.set_author(name=autor, icon_url=autor.avatar.url)
@@ -471,18 +472,18 @@ class Report(commands.Cog):
                 return True
 
         async def the_callback(interaction, bugreportchannel):
-            option = select.values[0]
+            option2 = select.values[0]
             page1 = await ctx.interaction.original_message()
             await page1.delete()
-            if option == "General Bug":
-                await bughandlers(self, ctx, ReplySystem, bugreportchannel, option, autor)
-            elif option == "Model Bug":
-                await bughandlers(self, ctx, ReplySystem, bugreportchannel, option, autor)
-            elif option == "Game-Breaking Bug":
-                await bughandlers(self, ctx, ReplySystem, bugreportchannel, option, autor)
-            elif option == "Other":
-                await bughandlers(self, ctx, ReplySystem, bugreportchannel, option, autor)
-            elif option == "Cancel/Exit":
+            if option2 == "General Bug":
+                await bughandlers(self, ctx, ReplySystem, bugreportchannel, option2, autor)
+            elif option2 == "Model Bug":
+                await bughandlers(self, ctx, ReplySystem, bugreportchannel, option2, autor)
+            elif option2 == "Game-Breaking Bug":
+                await bughandlers(self, ctx, ReplySystem, bugreportchannel, option2, autor)
+            elif option2 == "Other":
+                await bughandlers(self, ctx, ReplySystem, bugreportchannel, option2, autor)
+            elif option2 == "Cancel/Exit":
                 return await interaction.response.send_message('The Process has been cancelled! Use ``/reportbug`` again to start the command over.', ephemeral=True)
 
         async def new_callback(interaction):
