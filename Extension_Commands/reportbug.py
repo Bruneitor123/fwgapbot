@@ -453,14 +453,6 @@ class Report(commands.Cog):
         discord.SelectOption(label="Splatter Blocks", description="And this is Splatter Blocks Game", emoji="🤖"),
         discord.SelectOption(label="Cancel/Exit", description="", emoji=f"{noemoji}")])
 
-
-        select = Select(placeholder="Select a Bug Category", options=[
-        discord.SelectOption(label="General Bug", description="Bugs that may affect user experience.", emoji="⚙️"),
-        discord.SelectOption(label="Model Bug", description="Visual errors (incorrect colors, misplaced parts, etc.)", emoji="🎨"),
-        discord.SelectOption(label="Game-Breaking Bug", description="Bugs that break your game (I lost all my data, etc.)", emoji="🤖"),
-        discord.SelectOption(label="Other Bugs", description="Other bugs that aren't listed here, e.g. strange errors.", emoji="🔎"),
-        discord.SelectOption(label="Cancel/Exit", description="", emoji=f"{noemoji}")])
-        
         autor = ctx.author
         embed1=discord.Embed(title="FWG Bug Report System", description="**Choose a Bug Category to proceed: **", color=0xFFFFFF)
         embed1.set_author(name=autor, icon_url=autor.avatar.url)
@@ -472,6 +464,12 @@ class Report(commands.Cog):
                 return True
 
         async def the_callback(interaction, bugreportchannel):
+            select = Select(placeholder="Select a Bug Category", options=[
+                        discord.SelectOption(label="General Bug", description="Bugs that may affect user experience.", emoji="⚙️"),
+                        discord.SelectOption(label="Model Bug", description="Visual errors (incorrect colors, misplaced parts, etc.)", emoji="🎨"),
+                        discord.SelectOption(label="Game-Breaking Bug", description="Bugs that break your game (I lost all my data, etc.)", emoji="🤖"),
+                        discord.SelectOption(label="Other Bugs", description="Other bugs that aren't listed here, e.g. strange errors.", emoji="🔎"),
+                        discord.SelectOption(label="Cancel/Exit", description="", emoji=f"{noemoji}")])
             option2 = select.values[0]
             page1 = await ctx.interaction.original_message()
             await page1.delete()
@@ -487,6 +485,12 @@ class Report(commands.Cog):
                 return await interaction.response.send_message('The Process has been cancelled! Use ``/reportbug`` again to start the command over.', ephemeral=True)
 
         async def new_callback(interaction):
+            select = Select(placeholder="Select a Bug Category", options=[
+                        discord.SelectOption(label="General Bug", description="Bugs that may affect user experience.", emoji="⚙️"),
+                        discord.SelectOption(label="Model Bug", description="Visual errors (incorrect colors, misplaced parts, etc.)", emoji="🎨"),
+                        discord.SelectOption(label="Game-Breaking Bug", description="Bugs that break your game (I lost all my data, etc.)", emoji="🤖"),
+                        discord.SelectOption(label="Other Bugs", description="Other bugs that aren't listed here, e.g. strange errors.", emoji="🔎"),
+                        discord.SelectOption(label="Cancel/Exit", description="", emoji=f"{noemoji}")])
             option = select2.values[0]
             if option == "Airport Tycoon":
                 bugreportchannel = self.bot.get_channel(681730197275541504) # Airport Tycoon ID for Bug Report Channel
