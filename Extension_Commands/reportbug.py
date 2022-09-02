@@ -490,7 +490,7 @@ class Report(commands.Cog):
             if option == "Airport Tycoon":
                 bugreportchannel = self.bot.get_channel(681730197275541504) # Airport Tycoon ID for Bug Report Channel
                 embed1.set_footer(text=f"Bug-Report Channel Detected: {bugreportchannel.name}")
-                select.callback = the_callback(bugreportchannel=bugreportchannel)
+                select.callback = the_callback
                 thaview = View()
                 thaview.author = ctx.author.id
                 thaview.interaction_check = interaction_check
@@ -501,7 +501,7 @@ class Report(commands.Cog):
             elif option == "Plane Simulator":
                 bugreportchannel = self.bot.get_channel(856678763345215508) # Plane Sim ID CH
                 embed1.set_footer(text=f"Bug-Report Channel Detected: {bugreportchannel.name}")
-                select.callback = the_callback(bugreportchannel=bugreportchannel)
+                select.callback = the_callback
                 thaview = View()
                 thaview.author = ctx.author.id
                 thaview.interaction_check = interaction_check
@@ -512,7 +512,7 @@ class Report(commands.Cog):
             elif option == "Splatter Blocks":
                 bugreportchannel = self.bot.get_channel(1015025282006138961) # SB ID CH
                 embed1.set_footer(text=f"Bug-Report Channel Detected: {bugreportchannel.name}")
-                select.callback = the_callback(bugreportchannel=bugreportchannel)
+                select.callback = the_callback
                 thaview = View()
                 thaview.author = ctx.author.id
                 thaview.interaction_check = interaction_check
