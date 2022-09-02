@@ -463,6 +463,12 @@ class Report(commands.Cog):
         autor = ctx.author
         embed1=discord.Embed(title="FWG Bug Report System", description="**Choose a Bug Category to proceed: **", color=0xFFFFFF)
         embed1.set_author(name=autor, icon_url=autor.avatar.url)
+        async def interaction_check(interaction) -> bool:
+            if interaction.user.id != autor.id:
+                await interaction.response.send_message('You are not the owner of this interaction!', ephemeral=True)
+                return False
+            else:
+                return True
 
         async def the_callback(interaction, bugreportchannel):
             option = select.values[0]
@@ -478,19 +484,13 @@ class Report(commands.Cog):
                 await bughandlers(self, ctx, ReplySystem, bugreportchannel, option, autor)
             elif option == "Cancel/Exit":
                 return await interaction.response.send_message('The Process has been cancelled! Use ``/reportbug`` again to start the command over.', ephemeral=True)
-        async def interaction_check(interaction) -> bool:
-            if interaction.user.id != autor.id:
-                await interaction.response.send_message('You are not the owner of this interaction!', ephemeral=True)
-                return False
-            else:
-                return True
 
         async def new_callback(interaction):
             option = select2.values[0]
             if option == "Airport Tycoon":
                 bugreportchannel = self.bot.get_channel(681730197275541504) # Airport Tycoon ID for Bug Report Channel
                 embed1.set_footer(text=f"Bug-Report Channel Detected: {bugreportchannel.name}")
-                select.callback = the_callback
+                select.callback = the_callback(interaction, bugreportchannel)
                 thaview = View()
                 thaview.author = ctx.author.id
                 thaview.interaction_check = interaction_check
