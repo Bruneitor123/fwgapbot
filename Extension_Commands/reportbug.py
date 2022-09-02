@@ -447,6 +447,13 @@ class Report(commands.Cog):
     @slash_command()
     async def reportbug(self, ctx):
         """Creates an interactive embed where you can report bugs from Airport Simulator."""
+        select2 = Select(placeholder="Select the game you are referring the report to", options=[
+        discord.SelectOption(label="Airport Tycoon", description="Main FWG Game.", emoji="⚙️"),
+        discord.SelectOption(label="Plane Simulator", description="This is Plane Simulator Game", emoji="🎨"),
+        discord.SelectOption(label="Splatter Blocks", description="And this is Splatter Blocks Game", emoji="🤖"),
+        discord.SelectOption(label="Cancel/Exit", description="", emoji=f"{noemoji}")])
+
+
         select = Select(placeholder="Select a Bug Category", options=[
         discord.SelectOption(label="General Bug", description="Bugs that may affect user experience.", emoji="⚙️"),
         discord.SelectOption(label="Model Bug", description="Visual errors (incorrect colors, misplaced parts, etc.)", emoji="🎨"),
@@ -454,11 +461,10 @@ class Report(commands.Cog):
         discord.SelectOption(label="Other Bugs", description="Other bugs that aren't listed here, e.g. strange errors.", emoji="🔎"),
         discord.SelectOption(label="Cancel/Exit", description="", emoji=f"{noemoji}")])
         autor = ctx.author
-        bugreportchannel = find(lambda x:x.name == '🔧・bug-reports', ctx.guild.text_channels)
         embed1=discord.Embed(title="FWG Bug Report System", description="**Choose a Bug Category to proceed: **", color=0xFFFFFF)
         embed1.set_author(name=autor, icon_url=autor.avatar.url)
-        embed1.set_footer(text=f"Bug-Report Channel Detected: {bugreportchannel.name}")
-        async def the_callback(interaction):
+
+        async def the_callback(interaction, bugreportchannel):
             option = select.values[0]
             page1 = await ctx.interaction.original_message()
             await page1.delete()
@@ -479,13 +485,54 @@ class Report(commands.Cog):
             else:
                 return True
 
+        async def new_callback(interaction):
+            option = select.values[0]
+            if option == "Airport Tycoon":
+                bugreportchannel = self.bot.get_channel(681730197275541504) # Airport Tycoon ID for Bug Report Channel
+                embed1.set_footer(text=f"Bug-Report Channel Detected: {bugreportchannel.name}")
+                select.callback = the_callback(interaction=interaction,bugreportchannel=bugreportchannel)
+                thaview = View()
+                thaview.author = ctx.author.id
+                thaview.interaction_check = interaction_check
+                thaview.add_item(select)
+                return await ctx.respond(embed=embed1, view=thaview)
 
-        select.callback = the_callback
-        thaview = View()
-        thaview.author = ctx.author.id
-        thaview.interaction_check = interaction_check
-        thaview.add_item(select)
-        await ctx.respond(embed=embed1, view=thaview)
+
+            elif option == "Plane Simulator":
+                bugreportchannel = self.bot.get_channel(856678763345215508) # Plane Sim ID CH
+                embed1.set_footer(text=f"Bug-Report Channel Detected: {bugreportchannel.name}")
+                select.callback = the_callback(interaction=interaction,bugreportchannel=bugreportchannel)
+                thaview = View()
+                thaview.author = ctx.author.id
+                thaview.interaction_check = interaction_check
+                thaview.add_item(select)
+                return await ctx.respond(embed=embed1, view=thaview)
+
+
+            elif option == "Splatter Blocks":
+                bugreportchannel = self.bot.get_channel(1015025282006138961) # SB ID CH
+                embed1.set_footer(text=f"Bug-Report Channel Detected: {bugreportchannel.name}")
+                select.callback = the_callback(interaction=interaction,bugreportchannel=bugreportchannel)
+                thaview = View()
+                thaview.author = ctx.author.id
+                thaview.interaction_check = interaction_check
+                thaview.add_item(select)
+                return await ctx.respond(embed=embed1, view=thaview)
+
+
+            elif option == "Cancel/Exit":
+                return await interaction.response.send_message('The Process has been cancelled! Use ``/reportbug`` again to start the command over.', ephemeral=True)
+
+        select2.callback = new_callback
+        firstview = View()
+        firstview.author = ctx.author.id
+        firstview.interaction_check = interaction_check
+        firstview.add_item(select2)
+        await ctx.respond(embed=embed1, view=firstview)
+        
+
+
+        
 
 
 def setup(bot):
