@@ -486,7 +486,7 @@ class Report(commands.Cog):
                 return True
 
         async def new_callback(interaction):
-            option = select.values[0]
+            option = select2.values[0]
             if option == "Airport Tycoon":
                 bugreportchannel = self.bot.get_channel(681730197275541504) # Airport Tycoon ID for Bug Report Channel
                 embed1.set_footer(text=f"Bug-Report Channel Detected: {bugreportchannel.name}")
