@@ -454,7 +454,7 @@ class Report(commands.Cog):
         discord.SelectOption(label="Other Bugs", description="Other bugs that aren't listed here, e.g. strange errors.", emoji="🔎"),
         discord.SelectOption(label="Cancel/Exit", description="", emoji=f"{noemoji}")])
         autor = ctx.author
-        bugreportchannel = find(lambda x:'bug-reports' in x.name, ctx.guild.text_channels)
+        bugreportchannel = find(lambda x:x.name.__contains__("bug-reports"), ctx.guild.text_channels)
         embed1=discord.Embed(title="FWG Bug Report System", description="**Choose a Bug Category to proceed: **", color=0xFFFFFF)
         embed1.set_author(name=autor, icon_url=autor.avatar.url)
         embed1.set_footer(text=f"Bug-Report Channel Detected: {bugreportchannel.name}")
