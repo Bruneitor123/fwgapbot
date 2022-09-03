@@ -448,9 +448,9 @@ class Report(commands.Cog):
     async def reportbug(self, ctx):
         """Creates an interactive embed where you can report bugs from Airport Simulator."""
         select2 = Select(placeholder="Select the game you are referring the report to", options=[
-        discord.SelectOption(label="Airport Tycoon", description="Main FWG Game.", emoji="⚙️"),
-        discord.SelectOption(label="Plane Simulator", description="This is Plane Simulator Game", emoji="🎨"),
-        discord.SelectOption(label="Splatter Blocks", description="And this is Splatter Blocks Game", emoji="🤖"),
+        discord.SelectOption(label="Airport Tycoon", description="Main FWG Game.", emoji="<:fwg:769681026469068810>"),
+        discord.SelectOption(label="Plane Simulator", description="This is Plane Simulator Game", emoji="<:plane:949433161081843762>"),
+        discord.SelectOption(label="Splatter Blocks", description="And this is Splatter Blocks Game", emoji="🎨"),
         discord.SelectOption(label="Cancel/Exit", description="", emoji=f"{noemoji}")])
 
 
@@ -489,6 +489,8 @@ class Report(commands.Cog):
                 return await interaction.response.send_message('The Process has been cancelled! Use ``/reportbug`` again to start the command over.', ephemeral=True)
 
         async def new_callback(interaction):
+            page1 = await ctx.interaction.original_message()
+            await page1.delete()
             option = select2.values[0]
             if option == "Airport Tycoon":
                 bugreportchannel = self.bot.get_channel(681730197275541504) # Airport Tycoon ID for Bug Report Channel
@@ -505,6 +507,8 @@ class Report(commands.Cog):
 
             elif option == "Plane Simulator":
                 bugreportchannel = self.bot.get_channel(856678763345215508) # Plane Sim ID CH
+                global papu
+                papu = bugreportchannel
                 embed1.set_footer(text=f"Bug-Report Channel Detected: {bugreportchannel.name}")
                 select.callback = the_callback
                 thaview = View()
@@ -516,6 +520,8 @@ class Report(commands.Cog):
 
             elif option == "Splatter Blocks":
                 bugreportchannel = self.bot.get_channel(1015025282006138961) # SB ID CH
+                global papu
+                papu = bugreportchannel
                 embed1.set_footer(text=f"Bug-Report Channel Detected: {bugreportchannel.name}")
                 select.callback = the_callback
                 thaview = View()
