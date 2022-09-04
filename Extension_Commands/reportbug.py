@@ -475,8 +475,6 @@ class Report(commands.Cog):
             global papu
             option2 = select.values[0]
             bugreportchannel = papu
-            page1 = await ctx.interaction.original_message()
-            await page1.delete()
             if option2 == "General Bug":
                 await bughandlers(self, ctx, ReplySystem, bugreportchannel, option2, autor)
             elif option2 == "Model Bug":
@@ -503,7 +501,7 @@ class Report(commands.Cog):
                 thaview.author = ctx.author.id
                 thaview.interaction_check = interaction_check
                 thaview.add_item(select)
-                return await ctx.respond(embed=embed1, view=thaview)
+                return await ctx.respond(embed=embed1, view=thaview, ephemeral=True)
 
 
             elif option == "Plane Simulator":
@@ -515,7 +513,7 @@ class Report(commands.Cog):
                 thaview.author = ctx.author.id
                 thaview.interaction_check = interaction_check
                 thaview.add_item(select)
-                return await ctx.respond(embed=embed1, view=thaview)
+                return await ctx.respond(embed=embed1, view=thaview, ephemeral=True)
 
 
             elif option == "Splatter Blocks":
@@ -527,7 +525,7 @@ class Report(commands.Cog):
                 thaview.author = ctx.author.id
                 thaview.interaction_check = interaction_check
                 thaview.add_item(select)
-                return await ctx.respond(embed=embed1, view=thaview)
+                return await ctx.respond(embed=embed1, view=thaview, ephemeral=True)
 
 
             elif option == "Cancel/Exit":
