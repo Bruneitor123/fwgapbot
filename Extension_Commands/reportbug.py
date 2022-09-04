@@ -472,8 +472,8 @@ class Report(commands.Cog):
                 return True
 
         async def the_callback(interaction):
-            option2 = select.values[0]
             global papu
+            option2 = select.values[0]
             bugreportchannel = papu
             page1 = await ctx.interaction.original_message()
             await page1.delete()
@@ -489,12 +489,13 @@ class Report(commands.Cog):
                 return await interaction.response.send_message('The Process has been cancelled! Use ``/reportbug`` again to start the command over.', ephemeral=True)
 
         async def new_callback(interaction):
+            global papu
             page1 = await ctx.interaction.original_message()
             await page1.delete()
             option = select2.values[0]
             if option == "Airport Tycoon":
                 bugreportchannel = self.bot.get_channel(681730197275541504) # Airport Tycoon ID for Bug Report Channel
-                global papu
+                
                 papu = bugreportchannel
                 embed1.set_footer(text=f"Bug-Report Channel Detected: {bugreportchannel.name}")
                 select.callback = the_callback
@@ -507,7 +508,6 @@ class Report(commands.Cog):
 
             elif option == "Plane Simulator":
                 bugreportchannel = self.bot.get_channel(856678763345215508) # Plane Sim ID CH
-                global papu
                 papu = bugreportchannel
                 embed1.set_footer(text=f"Bug-Report Channel Detected: {bugreportchannel.name}")
                 select.callback = the_callback
@@ -520,7 +520,6 @@ class Report(commands.Cog):
 
             elif option == "Splatter Blocks":
                 bugreportchannel = self.bot.get_channel(1015025282006138961) # SB ID CH
-                global papu
                 papu = bugreportchannel
                 embed1.set_footer(text=f"Bug-Report Channel Detected: {bugreportchannel.name}")
                 select.callback = the_callback
