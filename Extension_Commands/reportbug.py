@@ -450,7 +450,7 @@ class Report(commands.Cog):
         select2 = Select(placeholder="Select the game you are referring the report to", options=[
         discord.SelectOption(label="Airport Tycoon", description="Main FWG Game.", emoji="<:fwg:769681026469068810>"),
         discord.SelectOption(label="Plane Simulator", description="This is Plane Simulator Game", emoji="<:plane:949433161081843762>"),
-        discord.SelectOption(label="Splatter Blocks", description="And this is Splatter Blocks Game", emoji="🎨"),
+        discord.SelectOption(label="Splatter Blocks", description="This is Splatter Blocks Game", emoji="🎨"),
         discord.SelectOption(label="Cancel/Exit", description="", emoji=f"{noemoji}")])
 
 
