@@ -32,6 +32,7 @@ extensions = [
               "Extension_Commands.reportbug",
               "Extension_Commands.suggest",
               "Extension_Commands.suggestplanes",
+              "Extension_Commands.airlinepost",
               
               ]
 
