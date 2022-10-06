@@ -235,7 +235,7 @@ class MyMessages(commands.Cog):
     @commands.Cog.listener("on_member_join")
     async def change_invalid_nick(self, member):
         membero:str = member.name
-        if membero.isascii():
+        if not membero.isascii():
             await member.edit(nick="Change your name")
             await member.send('Please change your nickname. ASCII Characters are not allowed.')
     
