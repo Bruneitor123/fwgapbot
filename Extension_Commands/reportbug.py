@@ -337,7 +337,7 @@ async def bughandlers(self, ctx, ReplySystem, bugreportchannel, option, autor):
                 await page1.delete()
                 return await ctx.respond('The Process has been automatically cancelled! Use ``/reportbug`` again to start the command over.', ephemeral=True)
 
-    elif option == "Other":
+    elif option == "Other Bugs":
         embed3=discord.Embed(title="FWG Bug Report System", description=emoji.emojize(" :mag: Other Bug Category Step 2/3"), color=0xFFFFFF)
         embed3.set_author(name=autor, icon_url=autor.avatar.url)
         embed3.set_thumbnail(url=urlowo)
