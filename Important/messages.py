@@ -7,7 +7,223 @@ from random import randrange
 import aiohttp
 import emoji
 from discord.ext import commands
+from discord.ui import Button, View, Modal, InputText
 from discord.utils import find
+
+class DetModal(Modal): #Money lost or data loss help
+    def __init__(self, bot, *args, **kwargs):
+        self.bot = bot
+        super().__init__(*args,**kwargs)
+
+        self.add_item(InputText(
+            label= "How much data did you lose?",
+            placeholder= "I lost all of my data / I lost some of my data",
+            style=discord.InputTextStyle.short,
+            max_length=30
+        ))
+
+        self.add_item(InputText(
+            label= "For which game did you lose your data?",
+            placeholder= "Airport Tycoon / Prison Tycoon",
+            style=discord.InputTextStyle.short,
+            max_length=20
+        ))
+
+        self.add_item(InputText(
+            label= "What data did you lose?",
+            placeholder= "Cash / Tycoon / Both / Other (Specify)",
+            style=discord.InputTextStyle.short,
+            max_length=32
+        ))
+
+        self.add_item(InputText(
+            label= "Did you get disconnected by any chance?",
+            placeholder= "Yes / No",
+            style=discord.InputTextStyle.short,
+            max_length=5
+        ))
+
+        self.add_item(InputText(
+            label= "How much did you lose?",
+            placeholder= "10 million... Specify.",
+            style=discord.InputTextStyle.short,
+            max_length=30
+        ))
+
+    async def callback(self, interaction:discord.Interaction):
+        embed = discord.Embed(title=f"Support has finished.", color=0xFFFFFF)
+        embed.add_field(name="Variables:", value=f"**User:** {interaction.user.mention}\n**How much data lost:** {self.children[0].value}\n**Game data loss:** {self.children[1].value}\n**Data lost:** {self.children[2].value}\n**Disconnected?:** {self.children[3].value}\n**Quantity lost: **{self.children[4].value}", inline=False)
+
+        sendc = self.bot.get_channel(926180074854682694)
+        await sendc.send(embed=embed)
+        await interaction.response.send_message('Thanks for submitting! We will be right back with you soon.', ephemeral=True)
+
+class PurModel(Modal): #Purchase Help
+    def __init__(self, bot, *args, **kwargs):
+        self.bot = bot
+        super().__init__(*args,**kwargs)
+
+        self.add_item(InputText(
+            label= "What Item did you buy?",
+            placeholder= "A VIP Pass...",
+            style=discord.InputTextStyle.short,
+            max_length=30
+        ))
+
+        self.add_item(InputText(
+            label= "Did you receive your item?",
+            placeholder= "Yes / No",
+            style=discord.InputTextStyle.short,
+            max_length=5
+        ))
+
+        self.add_item(InputText(
+            label= "What happened to your purchase?",
+            placeholder= "I didn't get it because... ",
+            style=discord.InputTextStyle.long,
+            min_length=15
+        ))
+
+    async def callback(self, interaction:discord.Interaction):
+        embed = discord.Embed(title=f"Support has finished.", color=0xFFFFFF)
+        embed.add_field(name="Variables:", value=f"**User:** {interaction.user.mention}\n**Item bought:** {self.children[0].value}\n**Item received:** {self.children[1].value}\n**Reason for help:** {self.children[2].value}", inline=False)
+
+        sendc = self.bot.get_channel(926180074854682694)
+        await sendc.send(embed=embed)
+        await interaction.response.send_message('Thanks for submitting! We will be right back with you soon.', ephemeral=True)
+
+class SecModel(Modal): #Discord Help
+    def __init__(self, bot, *args, **kwargs):
+        self.bot = bot
+        super().__init__(*args,**kwargs)
+
+        self.add_item(InputText(
+            label= "Describe your problem here",
+            placeholder= "I can't upload images...",
+            style=discord.InputTextStyle.long,
+            min_length=50
+        ))
+
+        self.add_item(InputText(
+            label= "Is this related to moderating?",
+            placeholder= "Yes / No",
+            style=discord.InputTextStyle.short,
+            max_length=5
+        ))
+
+        self.add_item(InputText(
+            label= "Provide the date or approximate date of the problem",
+            placeholder= "Around Oct. 5 by 15:00...",
+            style=discord.InputTextStyle.long,
+            min_length=8
+        ))
+
+    async def callback(self, interaction:discord.Interaction):
+        embed = discord.Embed(title=f"Support has finished.", color=0xFFFFFF)
+        embed.add_field(name="Variables:", value=f"**User:** {interaction.user.mention}\n**Problem Desc:** {self.children[0].value}\n**Mod Related:** {self.children[1].value}\n**Aprox Date:** {self.children[2].value}", inline=False)
+
+        sendc = self.bot.get_channel(926180074854682694)
+        await sendc.send(embed=embed)
+        await interaction.response.send_message('Thanks for submitting! We will be right back with you soon.', ephemeral=True)
+
+class OthModel(Modal): #Other Help
+    def __init__(self, bot, *args, **kwargs):
+        self.bot = bot
+        super().__init__(*args,**kwargs)
+
+        self.add_item(InputText(
+            label= "Describe your problem here",
+            placeholder= "I can't upload images...",
+            style=discord.InputTextStyle.long,
+            min_length=50
+        ))
+
+        self.add_item(InputText(
+            label= "Is this related to moderating?",
+            placeholder= "Yes / No",
+            style=discord.InputTextStyle.short,
+            max_length=5
+        ))
+
+        self.add_item(InputText(
+            label= "Provide the date or approximate date of the problem",
+            placeholder= "Around Oct. 5 by 15:00...",
+            style=discord.InputTextStyle.long,
+            min_length=8
+        ))
+
+    async def callback(self, interaction:discord.Interaction):
+        embed = discord.Embed(title=f"Support has finished.", color=0xFFFFFF)
+        embed.add_field(name="Variables:", value=f"**User:** {interaction.user.mention}\n**Problem Desc:** {self.children[0].value}\n**Mod Related:** {self.children[1].value}\n**Aprox Date:** {self.children[2].value}", inline=False)
+
+        sendc = self.bot.get_channel(926180074854682694)
+        await sendc.send(embed=embed)
+        await interaction.response.send_message('Thanks for submitting! We will be right back with you soon.', ephemeral=True)
+
+
+class MyView(View):
+
+    def __init__(self, bot):
+        
+        self.bot = bot
+        super().__init__()
+
+    @discord.ui.button(label= "Your Game Data", style=discord.ButtonStyle.blurple, custom_id="gdata")
+    async def button_callback(self, button, interaction):
+        msgid = interaction.message.id
+        idlist = ["gdata","ipurch","disc","othr","canc"]
+        for ids in idlist:
+            b = [x for x in self.children if x.custom_id == ids][0]
+            b.disabled = True
+        modal = DetModal(title="Game Data Form Help",bot=self.bot)
+        await interaction.response.send_modal(modal)
+        await interaction.followup.edit_message(msgid, view=self)
+
+    @discord.ui.button(label= "An Item Purchase", style=discord.ButtonStyle.blurple, custom_id="ipurch")
+    async def button_callback2(self, button, interaction):
+        msgid = interaction.message.id
+        idlist = ["gdata","ipurch","disc","othr","canc"]
+        for ids in idlist:
+            b = [x for x in self.children if x.custom_id == ids][0]
+            b.disabled = True
+        
+        modal = PurModel(title="Item Purchase Form Help", bot=self.bot)
+        await interaction.response.send_modal(modal)
+        await interaction.followup.edit_message(msgid, view=self)
+
+    @discord.ui.button(label= "Discord", style=discord.ButtonStyle.blurple, custom_id="disc")
+    async def button_callback3(self, button, interaction):
+        msgid = interaction.message.id
+        idlist = ["gdata","ipurch","disc","othr","canc"]
+        for ids in idlist:
+            b = [x for x in self.children if x.custom_id == ids][0]
+            b.disabled = True
+        
+        modal = SecModel(title="Discord Form Help", bot=self.bot)
+        await interaction.response.send_modal(modal)
+        await interaction.followup.edit_message(msgid, view=self)
+    
+    @discord.ui.button(label= "Other", style=discord.ButtonStyle.blurple, custom_id="othr")
+    async def button_callback4(self, button, interaction):
+        msgid = interaction.message.id
+        idlist = ["gdata","ipurch","disc","othr","canc"]
+        for ids in idlist:
+            b = [x for x in self.children if x.custom_id == ids][0]
+            b.disabled = True
+        modal = OthModel(title="Other Form Help", bot=self.bot)
+        await interaction.response.send_modal(modal)
+        await interaction.followup.edit_message(msgid, view=self)
+
+    @discord.ui.button(label= "Cancel", style=discord.ButtonStyle.blurple, custom_id="canc")
+    async def button_callback5(self, button, interaction):
+        msgid = interaction.message.id
+        idlist = ["gdata","ipurch","disc","othr","canc"]
+        for ids in idlist:
+            b = [x for x in self.children if x.custom_id == ids][0]
+            b.disabled = True
+        await interaction.response.send_message("Process Cancelled!", ephemeral=True)
+        await interaction.followup.edit_message(msgid, view=self)
+
 
 
 class MyMessages(commands.Cog):
@@ -16,6 +232,13 @@ class MyMessages(commands.Cog):
         self.bot = bot
 
 
+    @commands.Cog.listener("on_member_join")
+    async def change_invalid_nick(self, member):
+        membero:str = member.name
+        if membero.isascii():
+            await member.edit(nick="Change your name")
+            await member.send('Please change your nickname. ASCII Characters are not allowed.')
+    
 
     #Tells whoever invites this bot to their server to just... It won't work :P
     @commands.Cog.listener("on_guild_join")
@@ -36,7 +259,8 @@ class MyMessages(commands.Cog):
         if (
             message.guild is None
             or message.author.bot
-            or message.guild.id not in fwgconfig.fwgguilds #fwgconfig.fwgguilds = list of guilds
+            or message.guild.id not in fwgconfig.fwgguilds #fwgconfig.fwgguilds = list of guilds/
+            
             #Below if uncommented will only make commands available for use to Florian and Me.
             #or message.author.id not in [348174141121101824,290078194298519552]
         ):
@@ -63,6 +287,21 @@ class MyMessages(commands.Cog):
                     await message.channel.send(embed=embed, delete_after=180.0)
                     return await message.delete()
 
+    @commands.Cog.listener("on_message")
+    async def supportbot(self, message):
+        if MyMessages.message_nuller(message):
+            #what to do: 
+            #use buttons for multiple options
+            #options will give responses
+            #responses will lead to other buttons
+            #finally buttons will end sometime
+            #if chosen other forward to tickets
+            #reference to buttons and other is on Florian's chat.
+            if 'help' in message.content:
+                view = MyView(bot=self.bot)
+                await message.channel.send("Hi! It's Fat Whale Bot. What can I help you with?", view=view)
+
+
 
     #THIS CHECKS IF THE BOT/STAFF/ETC HAS BEEN PINGED
     @commands.Cog.listener("on_message")
@@ -87,7 +326,7 @@ class MyMessages(commands.Cog):
                 #Whoever desires to ping me... Will face the truthless end.
 
             else:
-                if message.author.id in sparked_db.operatorlistcheck():
+                if message.author.id not in sparked_db.operatorlistcheck():
                     for i in sparked_db.operatorlistcheck():
                         didyoupingme = self.bot.get_user(i)
                         #print(didyoupingme) (Print the operator list in didyoupingme)
