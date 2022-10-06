@@ -481,7 +481,7 @@ class Report(commands.Cog):
                 await bughandlers(self, ctx, ReplySystem, bugreportchannel, option2, autor)
             elif option2 == "Game-Breaking Bug":
                 await bughandlers(self, ctx, ReplySystem, bugreportchannel, option2, autor)
-            elif option2 == "Other":
+            elif option2 == "Other Bugs":
                 await bughandlers(self, ctx, ReplySystem, bugreportchannel, option2, autor)
             elif option2 == "Cancel/Exit":
                 return await interaction.response.send_message('The Process has been cancelled! Use ``/reportbug`` again to start the command over.', ephemeral=True)
