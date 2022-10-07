@@ -112,7 +112,7 @@ class SecModel(Modal): #Discord Help
         ))
 
         self.add_item(InputText(
-            label= "Provide the date or approximate date of the problem",
+            label= "Provide the approx. date of the problem",
             placeholder= "Around Oct. 5 by 15:00...",
             style=discord.InputTextStyle.long,
             min_length=8
@@ -146,7 +146,7 @@ class OthModel(Modal): #Other Help
         ))
 
         self.add_item(InputText(
-            label= "Provide the date or approximate date of the problem",
+            label= "Provide the approx. date of the problemm",
             placeholder= "Around Oct. 5 by 15:00...",
             style=discord.InputTextStyle.long,
             min_length=8
@@ -237,7 +237,7 @@ class MyMessages(commands.Cog):
         membero:str = member.name
         if not membero.isascii():
             await member.edit(nick="Change your name")
-            await member.send('Please change your nickname. ASCII Characters are not allowed.')
+            await member.send('Please change your nickname. Non ASCII Characters are not allowed.')
     
 
     #Tells whoever invites this bot to their server to just... It won't work :P
@@ -261,7 +261,7 @@ class MyMessages(commands.Cog):
             or message.author.bot
             or message.guild.id not in fwgconfig.fwgguilds #fwgconfig.fwgguilds = list of guilds/
             
-            #Below if uncommented will only make commands available for use to Florian and Me.
+            #Below if uncommented will only make message triggers available for use to Florian and Me.
             #or message.author.id not in [348174141121101824,290078194298519552]
         ):
             return False
