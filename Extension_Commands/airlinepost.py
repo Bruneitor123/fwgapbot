@@ -34,7 +34,7 @@ class DetModal(Modal):
             placeholder="Welcome to Fat Whale Games! This server contains...",
             style=discord.InputTextStyle.long,
             min_length=50,
-            max_length=200
+            max_length=400
 
         ))
 

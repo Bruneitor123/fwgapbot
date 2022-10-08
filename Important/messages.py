@@ -113,9 +113,10 @@ class SecModel(Modal): #Discord Help
 
         self.add_item(InputText(
             label= "Provide the approx. date of the problem",
-            placeholder= "Around Oct. 5 by 15:00...",
+            placeholder= "Around Oct. 5 at 15:00...",
             style=discord.InputTextStyle.long,
-            min_length=8
+            min_length=8,
+            max_length=400
         ))
 
     async def callback(self, interaction:discord.Interaction):
@@ -147,9 +148,10 @@ class OthModel(Modal): #Other Help
 
         self.add_item(InputText(
             label= "Provide the approx. date of the problemm",
-            placeholder= "Around Oct. 5 by 15:00...",
+            placeholder= "Around Oct. 5 at 15:00...",
             style=discord.InputTextStyle.long,
-            min_length=8
+            min_length=8,
+            max_length=400
         ))
 
     async def callback(self, interaction:discord.Interaction):
