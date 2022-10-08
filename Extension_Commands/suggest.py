@@ -31,6 +31,8 @@ class Suggest(commands.Cog):
         emoji1 = yesemoji
         emoji2 = noemoji
         channel = find(lambda x:x.name == '🙂・suggestions', ctx.guild.text_channels)
+        if channel is None:
+            channel = self.bot.get_channel(862567768599822376)
         embed=discord.Embed(title=emoji.emojize("FWG Suggestions"), description=" ", color=0xFFFFFF)
         embed.set_author(name=userboi, icon_url=userboi.avatar.url)
         embed.set_thumbnail(url=urlowo)

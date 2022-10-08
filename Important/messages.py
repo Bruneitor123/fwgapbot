@@ -240,6 +240,11 @@ class MyMessages(commands.Cog):
         if not membero.isascii():
             await member.edit(nick="Change your name")
             await member.send('Please change your nickname. Non ASCII Characters are not allowed.')
+
+    @commands.Cog.listener("on_message")
+    async def prevent_post_airlines(self, message):
+        if message.channel.id == 1021180575140302902:
+            return await message.delete()
     
 
     #Tells whoever invites this bot to their server to just... It won't work :P
