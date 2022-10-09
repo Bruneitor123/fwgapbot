@@ -244,6 +244,8 @@ class MyMessages(commands.Cog):
     @commands.Cog.listener("on_message")
     async def prevent_post_airlines(self, message):
         if message.channel.id == 1021180575140302902:
+            if message.author.bot:
+                return
             return await message.delete()
     
 
