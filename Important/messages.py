@@ -81,7 +81,7 @@ class PurModel(Modal): #Purchase Help
             label= "What happened to your purchase?",
             placeholder= "I didn't get it because... ",
             style=discord.InputTextStyle.long,
-            min_length=400
+            max_lenght=400
         ))
 
     async def callback(self, interaction:discord.Interaction):
@@ -101,7 +101,7 @@ class SecModel(Modal): #Discord Help
             label= "Describe your problem here",
             placeholder= "I can't upload images...",
             style=discord.InputTextStyle.long,
-            min_length=400
+            max_lenght=400
         ))
 
         self.add_item(InputText(
@@ -158,7 +158,7 @@ class OthModel(Modal): #Other Help
         embed = discord.Embed(title=f"Support has finished.", color=0xFFFFFF)
         embed.add_field(name="Variables:", value=f"**User:** {interaction.user.mention}\n**Problem Desc:** {self.children[0].value}\n**Mod Related:** {self.children[1].value}\n**Aprox Date:** {self.children[2].value}", inline=False)
 
-        sendc = self.bot.get_channel(926180074854682694)
+        sendc = self.bot.get_channel(1028804301205807154)
         await sendc.send(embed=embed)
         await interaction.response.send_message('Thanks for submitting! We will be right back with you soon.', ephemeral=True)
 
