@@ -19,21 +19,21 @@ class DetModal(Modal): #Money lost or data loss help
             label= "How much data did you lose?",
             placeholder= "I lost all of my data / I lost some of my data",
             style=discord.InputTextStyle.short,
-            max_length=30
+            max_length=400
         ))
 
         self.add_item(InputText(
             label= "For which game did you lose your data?",
             placeholder= "Airport Tycoon / Prison Tycoon",
             style=discord.InputTextStyle.short,
-            max_length=20
+            max_length=400
         ))
 
         self.add_item(InputText(
             label= "What data did you lose?",
             placeholder= "Cash / Tycoon / Both / Other (Specify)",
             style=discord.InputTextStyle.short,
-            max_length=32
+            max_length=400
         ))
 
         self.add_item(InputText(
@@ -47,14 +47,14 @@ class DetModal(Modal): #Money lost or data loss help
             label= "How much did you lose?",
             placeholder= "10 million... Specify.",
             style=discord.InputTextStyle.short,
-            max_length=30
+            max_length=400
         ))
 
     async def callback(self, interaction:discord.Interaction):
         embed = discord.Embed(title=f"Support has finished.", color=0xFFFFFF)
         embed.add_field(name="Variables:", value=f"**User:** {interaction.user.mention}\n**How much data lost:** {self.children[0].value}\n**Game data loss:** {self.children[1].value}\n**Data lost:** {self.children[2].value}\n**Disconnected?:** {self.children[3].value}\n**Quantity lost: **{self.children[4].value}", inline=False)
 
-        sendc = self.bot.get_channel(926180074854682694)
+        sendc = self.bot.get_channel(1028804301205807154) #uses support-answers channel
         await sendc.send(embed=embed)
         await interaction.response.send_message('Thanks for submitting! We will be right back with you soon.', ephemeral=True)
 
@@ -67,7 +67,7 @@ class PurModel(Modal): #Purchase Help
             label= "What Item did you buy?",
             placeholder= "A VIP Pass...",
             style=discord.InputTextStyle.short,
-            max_length=30
+            max_length=400
         ))
 
         self.add_item(InputText(
@@ -81,7 +81,7 @@ class PurModel(Modal): #Purchase Help
             label= "What happened to your purchase?",
             placeholder= "I didn't get it because... ",
             style=discord.InputTextStyle.long,
-            min_length=15
+            min_length=400
         ))
 
     async def callback(self, interaction:discord.Interaction):
@@ -101,7 +101,7 @@ class SecModel(Modal): #Discord Help
             label= "Describe your problem here",
             placeholder= "I can't upload images...",
             style=discord.InputTextStyle.long,
-            min_length=50
+            min_length=400
         ))
 
         self.add_item(InputText(
@@ -147,7 +147,7 @@ class OthModel(Modal): #Other Help
         ))
 
         self.add_item(InputText(
-            label= "Provide the approx. date of the problemm",
+            label= "Provide the approx. date of the problem",
             placeholder= "Around Oct. 5 at 15:00...",
             style=discord.InputTextStyle.long,
             min_length=8,
@@ -296,19 +296,19 @@ class MyMessages(commands.Cog):
                     await message.channel.send(embed=embed, delete_after=180.0)
                     return await message.delete()
 
+    @commands.Cog.listener("on_guild_channel_create")
+    async def supportbot(self, channel):
+            ch:str = channel.name
+            if 'ticket' in ch.lower():
+                if channel.guild.id is 645052129710571581:
+                    view = MyView(bot=self.bot)
+                    await channel.send("Hi! It's Fat Whale Bot. What can I help you with?", view=view)
+
     @commands.Cog.listener("on_message")
-    async def supportbot(self, message):
-        if MyMessages.message_nuller(message):
-            #what to do: 
-            #use buttons for multiple options
-            #options will give responses
-            #responses will lead to other buttons
-            #finally buttons will end sometime
-            #if chosen other forward to tickets
-            #reference to buttons and other is on Florian's chat.
-            if 'help' in message.content:
-                view = MyView(bot=self.bot)
-                await message.channel.send("Hi! It's Fat Whale Bot. What can I help you with?", view=view)
+    async def minihelp(self, message):
+        if 'help' in message.content:
+            if message.channel.id is 645052129710571581:
+                await message.channel.send("Need help? For general help type /faq (WIP) and for support, create a ticket in <#720322615134257202>") #support channel
 
 
 
