@@ -307,7 +307,7 @@ class MyMessages(commands.Cog):
     @commands.Cog.listener("on_message")
     async def minihelp(self, message):
         if 'help' in message.content:
-            if message.channel.id == 645052129710571581:
+            if message.guild.id == 645052129710571581:
                 await message.channel.send("Need help? For general help type /faq (WIP) and for support, create a ticket in <#720322615134257202>") #support channel
 
 
