@@ -300,14 +300,14 @@ class MyMessages(commands.Cog):
     async def supportbot(self, channel):
             ch:str = channel.name
             if 'ticket' in ch.lower():
-                if channel.guild.id is 645052129710571581:
+                if channel.guild.id == 645052129710571581:
                     view = MyView(bot=self.bot)
                     await channel.send("Hi! It's Fat Whale Bot. What can I help you with?", view=view)
 
     @commands.Cog.listener("on_message")
     async def minihelp(self, message):
         if 'help' in message.content:
-            if message.channel.id is 645052129710571581:
+            if message.channel.id == 645052129710571581:
                 await message.channel.send("Need help? For general help type /faq (WIP) and for support, create a ticket in <#720322615134257202>") #support channel
 
 
