@@ -28,7 +28,7 @@ class SuggestPlanes(commands.Cog):
         ):
         """Suggest your favorite plane! """
         autor = ctx.author
-        planechannel = find(lambda x:x.name == '🛩plane-suggestions', ctx.guild.text_channels)
+        planechannel = find(lambda x:x.name == '🛩・plane-suggestions', ctx.guild.text_channels)
         if planechannel is None:
             return await ctx.respond('There was no plane suggestions channel found. (This command is Only available for [Airplane Simulator](https://discord.gg/xD3x4pVDV6))', ephemeral=True)
             
