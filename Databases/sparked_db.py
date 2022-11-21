@@ -122,8 +122,8 @@ def toomanyplanes(suggester):
             db.close()
         #Se ejecuta cuando el timeout ya ha pasado o es igual
         elif hastimestamp(suggester=suggester) <= int(time.time()):
-            updatestring = "UPDATE `airplanelist` SET `suggester_name` = %s WHERE `suggester_name` = %s"
-            c.execute(updatestring, (f"{suggester.name} (UP)", suggester.name))
+            updatestring = "UPDATE `airplanelist` SET `suggester_id` = %s WHERE `suggester_id` = %s"
+            c.execute(updatestring, (f"{suggester.id} (UP)", suggester.id))
             updatestring2 = "UPDATE `ginfo` SET `plsug_timeout` = %s WHERE `user_id` = %s"
             c.execute(updatestring2, (createtimeout(), suggester.id))
             db.commit()
@@ -171,7 +171,7 @@ def mysql_table():
 
     c.execute("""CREATE TABLE IF NOT EXISTS `airplanelist` (
                 `rowid` INTEGER PRIMARY KEY AUTO_INCREMENT,
-                `suggester_id` BIGINT(16),
+                `suggester_id` VARCHAR(32),
                 `suggester_name` VARCHAR(64),
                 `airplane_name` VARCHAR(64),
                 `message_link` VARCHAR(256)
