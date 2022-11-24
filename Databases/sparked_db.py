@@ -123,7 +123,8 @@ def toomanyplanes(suggester):
         #Se ejecuta cuando el timeout ya ha pasado o es igual
         elif hastimestamp(suggester=suggester) <= int(time.time()):
             updatestring = "UPDATE `airplanelist` SET `suggester_id` = %s WHERE `suggester_id` = %s"
-            c.execute(updatestring, (f"{suggester.id} (UP)", suggester.id))
+            suggesterup = suggester.id + 12345678
+            c.execute(updatestring, (suggesterup, suggester.id))
             updatestring2 = "UPDATE `ginfo` SET `plsug_timeout` = %s WHERE `user_id` = %s"
             c.execute(updatestring2, (createtimeout(), suggester.id))
             db.commit()
