@@ -37,7 +37,7 @@ class SuggestPlanes(commands.Cog):
         embed1.set_thumbnail(url="https://cdn.discordapp.com/attachments/707431044902682644/931755527334137886/Logo4_AS_copy.png")
         embed1.set_footer(text="This process will be automatically cancelled in 60 seconds.")
         await ctx.respond(embed=embed1)
-        page1 = await ctx.interaction.original_message()
+        page1 = await ctx.interaction.original_response()
         await page1.add_reaction(yesemoji)
         await page1.add_reaction(noemoji)
         def check(reaction, user):

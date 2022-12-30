@@ -54,8 +54,7 @@ class DetModal(Modal): #Money lost or data loss help
         embed = discord.Embed(title=f"Support has finished.", color=0xFFFFFF)
         embed.add_field(name="Variables:", value=f"**User:** {interaction.user.mention}\n**How much data lost:** {self.children[0].value}\n**Game data loss:** {self.children[1].value}\n**Data lost:** {self.children[2].value}\n**Disconnected?:** {self.children[3].value}\n**Quantity lost: **{self.children[4].value}", inline=False)
 
-        sendc = self.bot.get_channel(1028804301205807154) #uses support-answers channel
-        await sendc.send(embed=embed)
+        await interaction.response.send_message(embed=embed)
         await interaction.response.send_message('Thanks for submitting! We will be right back with you soon.', ephemeral=True)
 
 class PurModel(Modal): #Purchase Help
@@ -88,8 +87,7 @@ class PurModel(Modal): #Purchase Help
         embed = discord.Embed(title=f"Support has finished.", color=0xFFFFFF)
         embed.add_field(name="Variables:", value=f"**User:** {interaction.user.mention}\n**Item bought:** {self.children[0].value}\n**Item received:** {self.children[1].value}\n**Reason for help:** {self.children[2].value}", inline=False)
 
-        sendc = self.bot.get_channel(926180074854682694)
-        await sendc.send(embed=embed)
+        await interaction.response.send_message(embed=embed)
         await interaction.response.send_message('Thanks for submitting! We will be right back with you soon.', ephemeral=True)
 
 class SecModel(Modal): #Discord Help
@@ -123,8 +121,7 @@ class SecModel(Modal): #Discord Help
         embed = discord.Embed(title=f"Support has finished.", color=0xFFFFFF)
         embed.add_field(name="Variables:", value=f"**User:** {interaction.user.mention}\n**Problem Desc:** {self.children[0].value}\n**Mod Related:** {self.children[1].value}\n**Aprox Date:** {self.children[2].value}", inline=False)
 
-        sendc = self.bot.get_channel(926180074854682694)
-        await sendc.send(embed=embed)
+        await interaction.response.send_message(embed=embed)
         await interaction.response.send_message('Thanks for submitting! We will be right back with you soon.', ephemeral=True)
 
 class OthModel(Modal): #Other Help
@@ -158,8 +155,7 @@ class OthModel(Modal): #Other Help
         embed = discord.Embed(title=f"Support has finished.", color=0xFFFFFF)
         embed.add_field(name="Variables:", value=f"**User:** {interaction.user.mention}\n**Problem Desc:** {self.children[0].value}\n**Mod Related:** {self.children[1].value}\n**Aprox Date:** {self.children[2].value}", inline=False)
 
-        sendc = self.bot.get_channel(1028804301205807154)
-        await sendc.send(embed=embed)
+        await interaction.response.send_message(embed=embed)
         await interaction.response.send_message('Thanks for submitting! We will be right back with you soon.', ephemeral=True)
 
 

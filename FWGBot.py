@@ -7,6 +7,7 @@ import discord
 #Database Entries and More
 from Databases import sparked_db
 from discord.utils import find
+from discord.ext import tasks
 
 #BOTTOM WILL DEBUG EVERY ASYNC TASK THAT HAPPENS (YES YES SIR)
 #os.environ["PYTHONASYNCIODEBUG"] = "1"
@@ -118,6 +119,10 @@ async def on_member_update(before, after):
 
         await channel.send("{0.mention} Stopped boosting the server. Perks were removed and color roles were too. The user has not been removed to the database to keep information.".format(after))
 
+@tasks.loop(hours=1)
+async def update_presence_dc():
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{len(bot.users)} users in {len(bot.guilds)} guilds."))
+    
 
 #FINAL STATEMENTS
 bot.run(mythicaltoken, reconnect=True) #Run the maximum token in a secret txt file
