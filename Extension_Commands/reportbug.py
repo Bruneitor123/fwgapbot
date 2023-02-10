@@ -446,11 +446,11 @@ class Report(commands.Cog):
 
     @slash_command()
     async def reportbug(self, ctx):
-        """Creates an interactive embed where you can report bugs from Airport Simulator."""
+        """Creates an interactive embed where you can report bugs from any official FWG Server."""
         select2 = Select(placeholder="Select the game you are referring the report to", options=[
-        discord.SelectOption(label="Airport Tycoon", description="Main FWG Game.", emoji="<:fwg:769681026469068810>"),
-        discord.SelectOption(label="Plane Simulator", description="This is Plane Simulator Game", emoji="<:plane:949433161081843762>"),
-        discord.SelectOption(label="Splatter Blocks", description="This is Splatter Blocks Game", emoji="🎨"),
+        discord.SelectOption(label="Airport Tycoon", emoji="<:New_Icon_Test:1073090796435275877>"),
+        discord.SelectOption(label="Airplane Simulator", emoji="<:IconTest2:1073090209291436143>"),
+        discord.SelectOption(label="Other Experiences", emoji="⚙️"),
         discord.SelectOption(label="Cancel/Exit", description="", emoji=f"{noemoji}")])
 
 
@@ -504,7 +504,7 @@ class Report(commands.Cog):
                 return await ctx.respond(embed=embed1, view=thaview, ephemeral=True)
 
 
-            elif option == "Plane Simulator":
+            elif option == "Airplane Simulator":
                 bugreportchannel = self.bot.get_channel(856678763345215508) # Plane Sim ID CH
                 papu = bugreportchannel
                 embed1.set_footer(text=f"Bug-Report Channel Detected: {bugreportchannel.name}")
@@ -516,8 +516,8 @@ class Report(commands.Cog):
                 return await ctx.respond(embed=embed1, view=thaview, ephemeral=True)
 
 
-            elif option == "Splatter Blocks":
-                bugreportchannel = self.bot.get_channel(1015025282006138961) # SB ID CH
+            elif option == "Other experiences":
+                bugreportchannel = self.bot.get_channel(681730197275541504) # Other experiences
                 papu = bugreportchannel
                 embed1.set_footer(text=f"Bug-Report Channel Detected: {bugreportchannel.name}")
                 select.callback = the_callback
