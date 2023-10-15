@@ -1,4 +1,5 @@
 import discord
+from Databases import sparked_db
 from discord.ext import commands
 from discord.commands import slash_command
 from discord.ui import Modal, InputText, Button, View, Select
@@ -31,7 +32,7 @@ class DetModal(Modal):
         ))
 
         self.add_item(InputText(
-            label="Enter your Airline Short Description",
+            label="Enter your Airline Description",
             placeholder="Welcome to Fat Whale Games! This server contains...",
             style=discord.InputTextStyle.long,
             min_length=50,
@@ -51,7 +52,16 @@ class DetModal(Modal):
         view.add_item(button)
 
 
-        await interaction.response.send_message(embed=embed, view=view)
+        #stores message id, with data; also stores user id who posted it
+        msg = await interaction.response.send_message(embed=embed, view=view)
+        db, c = sparked_db.connectplz()
+        insertuser = "INSERT INTO `airlines` (`msg_id`,`owner_id`,`airline_name`,`airline_alias`,`discord_link`,`airline_desc`) VALUES (%s, %s, %s, %s, %s, %s)"
+        c.execute(insertuser, (msg.id, interaction.user.id, self.children[0].value, self.children[1].value, self.children[2].value, self.children[3].value))
+        updatestring = "UPDATE `airlines` SET `is_airline_active` = True WHERE `owner_id` = '%s'"
+        c.execute(updatestring, (interaction.user.id))
+        db.commit()
+        db.close()
+        #then do below
         await interaction.followup.send('Airline Posted!', ephemeral=True)
 
 
@@ -62,6 +72,7 @@ class AirlinePost(commands.Cog):
 
     @slash_command()
     async def postairline(self,ctx):
+        #TODO: checks if user has airline to prevent command usage/spam
         """This will post your airline in the airlines channel."""
         modal = DetModal(title="Submit an Airline Form", bot=self.bot)
         await ctx.send_modal(modal)
@@ -70,23 +81,34 @@ class AirlinePost(commands.Cog):
     @slash_command()
     async def myairline(self,ctx):
         """This is specifically to configure your already existing airline..."""
-        airline_existing = True
+        #gets airline_existing wiht user id, if airline posted then will get info and prepare everything
+        airline_existing = sparked_db.existing_airline(ctx.author.id)
         if airline_existing:
             select2 = Select(placeholder="What do you want to configure?", options=[
+            #airline desc is literally the first embed with desc
             discord.SelectOption(label="Airline Description", description="Your airline description", emoji="<:fwg:769681026469068810>"),
+            #airline alias it the max 4 characters for the external link
             discord.SelectOption(label="Airline Alias", description="The airline acronym", emoji="<:plane:949433161081843762>"),
+            #airline link for the external link (must be discord.gg)
             discord.SelectOption(label="Airline Link", description="The discord server link for your airline", emoji="🎨"),
+            #bump airline will delete the latest message (using id and fetchmessage), then it will grab same data from before and re-post it. literally bumping it
             discord.SelectOption(label="Bump Airline!", description="Bump your airline! Available only every 12hrs", emoji="⬆️"),
+            #exits
             discord.SelectOption(label="Cancel/Exit", description="", emoji=f"{noemoji}")])
             firstview = View()
             firstview.author = ctx.author.id
 
             async def new_callback(interaction):
+                db, c = sparked_db.connectplz()
+                selectsystem = "SELECT %s FROM airlines WHERE owner_id = '%s'"
                 option = select2.values[0]
                 firstview.clear_items()
                 await ctx.interaction.edit_original_message(content='You have selected one already!',view=firstview)
                 if option == "Airline Description":
-                    return await interaction.response.send_message('You Chose Airline Desc!', ephemeral=True)
+                    c.execute(selectsystem, ('airline_desc', interaction.user.id))
+                    airdesc = c.fetchone()
+                    await interaction.response.send_message(f'Your Airline Description currently is: \n{airdesc}', ephemeral=True)
+
                 elif option == "Airline Alias":
                     return await interaction.response.send_message('You Chose Airline Alias!', ephemeral=True)
                 elif option == "Airline Link":

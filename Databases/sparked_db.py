@@ -34,10 +34,18 @@ def operatorlistcheck():
     nodupelist = list(dict.fromkeys(oplist))
     return nodupelist
 
+def existing_airline(value):
+    db, c = connectplz()
+    selectstring = "SELECT is_airline_active FROM airlines WHERE owner_id = '%s'"
+    c.execute(selectstring, (value))
+    fetchfirst = c.fetchone()
+    return fetchfirst
+    
+
 def selectfirst(first, second, third, fourth):
     db, c = connectplz()
 
-    selectstring = "SELECT `%s` FROM `%s` WHERE `%s` = '%s'"
+    selectstring = "SELECT %s FROM %s WHERE %s = %s"
     c.execute(selectstring, (first, second, third, fourth))
     fetchfirst = c.fetchone()
     return fetchfirst
@@ -183,6 +191,16 @@ def mysql_table():
                 `user_id` BIGINT(16),
                 `user_name` VARCHAR(64),
                 `plsug_timeout` BIGINT(16)
+                ) DEFAULT CHARSET=utf8;""")
+    c.execute("""CREATE TABLE IF NOT EXISTS `airlines` (
+                `rowid` INTEGER PRIMARY KEY AUTO_INCREMENT,
+                `msg_id` BIGINT(16),
+                `owner_id` BIGINT(16),
+                `airline_name` VARCHAR(32),
+                `airline_alias` VARCHAR(6),
+                `discord_link` VARCHAR(256),
+                `airline_desc` LONGTEXT,
+                `is_airline_active` BOOLEAN
                 ) DEFAULT CHARSET=utf8;""")
 
     db.commit()

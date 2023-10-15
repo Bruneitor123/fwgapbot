@@ -13,14 +13,14 @@ from discord.ext import tasks
 #os.environ["PYTHONASYNCIODEBUG"] = "1"
 
 
-description = '''The Private Multi-task Fat Whales Games Bot\n Made by MrBrunoh. w/ Fat Whale Games (Version 3.109 Stable - Now this bot in 3+ authorized servers)'''
+description = '''The Private Multi-task Fat Whales Games Bot\n Made by MrBrunoh. w/ Fat Whale Games (Version 3.0912023 Stable - Now this bot in 3+ authorized servers)'''
 bot = discord.Bot(description=description, intents=discord.Intents.all(), debug_guilds=[856678143608094751, 645052129710571581])
 #Read the token in a private.txt file.
 readtoken = open("token.txt","r")
 if readtoken.mode == "r":
     contents = readtoken.read()
 else:
-    print('Error During the TOKEN reading, please check the file or the code.')
+    print('Error During the TOKEN reading, please check the file or the code. Look out for anything that may look wrong')
 mythicaltoken = str(contents)
 
 extensions = [
@@ -30,8 +30,8 @@ extensions = [
               "Fun_Commands.TTT",
               "Fun_Commands.minesweeper",
               #Load extension_commands because i'd like to separate each one of those lol
-              "Extension_Commands.reportbug",
-              "Extension_Commands.suggest",
+              #"Extension_Commands.reportbug",
+              #"Extension_Commands.suggest",
               "Extension_Commands.suggestplanes",
               "Extension_Commands.airlinepost",
               
@@ -40,7 +40,7 @@ extensions = [
 for extension in extensions:
         try:
             bot.load_extension(extension, store=False)
-            print(f'Loaded {extension} correctly!')
+            print(f'Loaded {extension} correctly! :)')
         except Exception as e:
             exc = '{}: {}'.format(type(e).__name__, e)
             print(f'Failed to load extension {extension}\n{exc}')
@@ -48,7 +48,7 @@ for extension in extensions:
 @bot.slash_command()
 @discord.default_permissions(administrator=True,)
 async def reloadcog(ctx, *, cog:str):
-    """Use only for admins. (RELoads a cog)"""
+    """Use only for admins. (Reloads a cog)"""
     try:
         bot.unload_extension(cog)
         bot.load_extension(cog)
@@ -77,20 +77,20 @@ async def on_ready():
     await bot.wait_until_ready()
 
     #Set a cool presence, why not?
-
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{len(bot.users)} users in {len(bot.guilds)} guilds."))
 
     print(" /\-----------------------------------------------------------------------------------------/\ ")
     print('                                         Logged in as:')
     print(f"                                    {bot.user.name}#{bot.user.discriminator}")
-    print(f'                            Watching {len(bot.users)} users in {len(bot.guilds)} guilds')
+    print(f'                            Watching carefully {len(bot.users)} users in {len(bot.guilds)} guilds')
     print(f'                            Latest known bot latency is: {bot.latency*1000:,.0f} ms')
     print(" /\------------------------------- Bot is ready and running! -------------------------------/\ ")
 
 @bot.event
 async def on_member_update(before, after):
+    #TODO this wont work in all servers, only one. MUST FIX!!!
     channel = find(lambda x:x.name == '💬・lounge', after.guild.text_channels) #General-Chat Channel
-    
+
     #User boosted the server!
     if before.premium_since is None and after.premium_since is not None:
         #Check for existing user
@@ -122,6 +122,7 @@ async def on_member_update(before, after):
 @tasks.loop(hours=1)
 async def update_presence_dc():
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{len(bot.users)} users in {len(bot.guilds)} guilds."))
+
     
 
 #FINAL STATEMENTS

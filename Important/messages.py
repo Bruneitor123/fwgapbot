@@ -9,6 +9,7 @@ import emoji
 from discord.ext import commands
 from discord.ui import Button, View, Modal, InputText
 from discord.utils import find
+from Extension_Commands.reportbug import ReplySystem
 
 class DetModal(Modal): #Money lost or data loss help
     def __init__(self, bot, *args, **kwargs):
@@ -230,8 +231,9 @@ class MyView(View):
 
 class MyMessages(commands.Cog):
 
-    def __init__(self, bot):
+    def __init__(self, bot, ctx):
         self.bot = bot
+        self.context = ctx
 
 
     @commands.Cog.listener("on_member_join")
@@ -246,8 +248,7 @@ class MyMessages(commands.Cog):
         if message.channel.id == 1021180575140302902:
             if message.author.bot:
                 return
-            return await message.delete()
-    
+            return await message.delete()    
 
     #Tells whoever invites this bot to their server to just... It won't work :P
     @commands.Cog.listener("on_guild_join")
@@ -270,7 +271,7 @@ class MyMessages(commands.Cog):
             or message.author.bot
             or message.guild.id not in fwgconfig.fwgguilds #fwgconfig.fwgguilds = list of guilds/
             
-            #Below if uncommented will only make message triggers available for use to Florian and Me.
+            #Below if uncommented will only make message triggers available for use to Florian and Me (Bruno).
             #or message.author.id not in [348174141121101824,290078194298519552]
         ):
             return False
@@ -305,13 +306,33 @@ class MyMessages(commands.Cog):
                     await channel.send("Hi! It's Fat Whale Bot. What can I help you with?", view=view)
 
     @commands.Cog.listener("on_message")
+    async def auto_embed(self, ctx, message):
+        if MyMessages.message_nuller(message):
+            if message.channel.id not in ['856678763345215508', '862567768599822376', '681730197275541504', '683151173746032650']:
+                return
+            embed = discord.Embed(description=message.content, color=message.author.color)
+            embed.set_author(name=message.author.display_name, icon_url=message.author.avatar_url)
+            embed.set_footer(text=f"Sent in {message.channel.name}")
+            view = ReplySystem(self.bot, ctx, 862567768599822376, embed=embed, embedmsg=embed)
+
+            await message.delete()
+            await message.channel.send(embed=embed, view=view)
+
+    @commands.Cog.listener("on_message")
     async def minihelp(self, message):
         if MyMessages.message_nuller(message):
             if 'help' in message.content:
                 if message.guild.id == 645052129710571581:
-                    await message.channel.send("Need help? For general help type /faq (WIP) and for support, create a ticket in <#720322615134257202>") #support channel
-
-
+                    return await message.channel.send("Need help? For general help type /faq (WIP) and for support, create a ticket in <#720322615134257202>") #support channel
+                
+    @commands.Cog.listener("on_message")
+    async def prevent_chat_fire_media(self, message):
+        if message.channel.id == 709119180665782343:
+            if len(message.attachments) == 0:
+                await message.channel.send("Text-Only not allowed in this channel!", delete_after=10.0)
+                return await message.delete()
+            else:
+                return await message.add_reaction(emoji.emojize(':fire:'))
 
     #THIS CHECKS IF THE BOT/STAFF/ETC HAS BEEN PINGED
     @commands.Cog.listener("on_message")
