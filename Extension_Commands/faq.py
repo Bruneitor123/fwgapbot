@@ -15,9 +15,10 @@ class FAQ(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-        @slash_command()
-        async def faq(self, ctx):
-            pass
+    @slash_command()
+    async def faq(self, ctx):
+        await ctx.send('Bro didnt finish this command', ephemeral=True)
+        pass
 
 def setup(bot):
     bot.add_cog(FAQ(bot))

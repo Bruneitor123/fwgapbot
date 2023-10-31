@@ -9,7 +9,6 @@ import emoji
 from discord.ext import commands
 from discord.ui import Button, View, Modal, InputText
 from discord.utils import find
-from Extension_Commands.reportbug import ReplySystem
 
 class DetModal(Modal): #Money lost or data loss help
     def __init__(self, bot, *args, **kwargs):
@@ -306,19 +305,6 @@ class MyMessages(commands.Cog):
                     await channel.send("Hi! It's Fat Whale Bot. What can I help you with?", view=view)
 
     @commands.Cog.listener("on_message")
-    async def auto_embed(self, ctx, message):
-        if MyMessages.message_nuller(message):
-            if message.channel.id not in ['856678763345215508', '862567768599822376', '681730197275541504', '683151173746032650']:
-                return
-            embed = discord.Embed(description=message.content, color=message.author.color)
-            embed.set_author(name=message.author.display_name, icon_url=message.author.avatar_url)
-            embed.set_footer(text=f"Sent in {message.channel.name}")
-            view = ReplySystem(self.bot, ctx, 862567768599822376, embed=embed, embedmsg=embed)
-
-            await message.delete()
-            await message.channel.send(embed=embed, view=view)
-
-    @commands.Cog.listener("on_message")
     async def minihelp(self, message):
         if MyMessages.message_nuller(message):
             if 'help' in message.content:
@@ -340,6 +326,8 @@ class MyMessages(commands.Cog):
 
         if MyMessages.message_nuller(message):
             if 5 > randrange(10): return
+            #DEBUGGING
+            await message.channel.send(f'{self.bot.user} test')
             if self.bot.user.mentioned_in(message) and message.mention_everyone is False:
 
                 search_url = 'https://zenquotes.io/api/random'
